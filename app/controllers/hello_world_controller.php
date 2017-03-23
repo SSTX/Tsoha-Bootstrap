@@ -11,4 +11,12 @@
       // Testaa koodiasi täällä
       echo 'Hello World!';
     }
+    
+    public static function filelist() {
+        View::make('filelist.html');
+    }
+    
+    public static function file() {
+        View::make('file.html');
+    }
   }
