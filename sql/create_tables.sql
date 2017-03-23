@@ -6,14 +6,6 @@ CREATE TABLE registered_user
     user_pw_hash text
 );
 
-CREATE TABLE message 
-(
-    message_id SERIAL PRIMARY KEY, 
-    message_author INTEGER REFERENCES registered_user(user_id), 
-    message_subject text, 
-    message_body text, 
-    message_submit_time timestamp with time zone
-);
 
 CREATE TABLE file_metadata 
 (
@@ -25,6 +17,16 @@ CREATE TABLE file_metadata
     file_path text,
     file_size bigint,
     file_type text
+);
+
+CREATE TABLE message 
+(
+    message_id SERIAL PRIMARY KEY, 
+    message_author INTEGER REFERENCES registered_user(user_id), 
+    message_related_file INTEGER REFERENCES file_metadata(file_id), 
+    message_subject text, 
+    message_body text, 
+    message_submit_time timestamp with time zone
 );
 
 CREATE TABLE tag 
