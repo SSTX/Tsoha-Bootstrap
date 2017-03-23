@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2017.1.25)  17 MAR 2017 15:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2017.1.25)  23 MAR 2017 23:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -340,34 +340,53 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen112
 \Gin@req@width=\dimen113
 )
-(./dokumentaatio.aux)
+(/usr/share/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
+
+(/usr/share/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen114
+\extrarowheight=\dimen115
+\NC@list=\toks22
+\extratabsurround=\skip46
+\backup@length=\skip47
+)
+\TX@col@width=\dimen116
+\TX@old@table=\dimen117
+\TX@old@col=\dimen118
+\TX@target=\dimen119
+\TX@delta=\dimen120
+\TX@cols=\count100
+\TX@ftn=\toks23
+) (./dokumentaatio.aux)
 \openout1 = `dokumentaatio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
- (/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+
+(/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count100
-\scratchdimen=\dimen114
+\scratchcounter=\count101
+\scratchdimen=\dimen121
 \scratchbox=\box28
-\nofMPsegments=\count101
-\nofMParguments=\count102
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count103
-\MPscratchDim=\dimen115
-\MPnumerator=\count104
-\makeMPintoPDFobject=\count105
-\everyMPtoPDFconversion=\toks23
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen122
+\MPnumerator=\count105
+\makeMPintoPDFobject=\count106
+\everyMPtoPDFconversion=\toks25
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -420,39 +439,60 @@ e
 File: kaaviot/kayttotapauskaavio.png Graphic file (type png)
 
 <use kaaviot/kayttotapauskaavio.png>
-Package pdftex.def Info: kaaviot/kayttotapauskaavio.png used on input line 16.
+Package pdftex.def Info: kaaviot/kayttotapauskaavio.png used on input line 19.
 (pdftex.def)             Requested size: 302.82932pt x 532.58612pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./kaaviot/kayttotapaus
 kaavio.png>]
-Overfull \hbox (1.07487pt too wide) in paragraph at lines 35--36
-\OT1/cmr/m/n/10 Tiedostoon li-it-tyv^^?a^^?a metati-etoa, kuten nime^^?a tai ku
--vausta, voi muokata. Tiedos-
+Overfull \hbox (4.21593pt too wide) in paragraph at lines 40--41
+ \OT1/cmr/bx/n/10 Poista tiedosto[] \OT1/cmr/m/n/10 K^^?aytt^^?aj^^?an val-it-s
+ema ja omis-tama tiedosto pois-te-taan. Tiedos-
  []
 
 
-Overfull \hbox (9.38972pt too wide) in paragraph at lines 42--43
-\OT1/cmr/m/n/10 Rekister^^?oitynyt k^^?aytt^^?aj^^?a voi muokata mink^^?a tahan
-sa l^^?ahett^^?am^^?ans^^?a vi-estin sis^^?alt^^?o^^?a,
+Overfull \hbox (31.78633pt too wide) in paragraph at lines 45--46
+ \OT1/cmr/bx/n/10 Muokkaa vi-esti^^?a[] \OT1/cmr/m/n/10 Rek-ister^^?oitynyt k^^
+?aytt^^?aj^^?a voi muokata mink^^?a tahansa l^^?ahett^^?am^^?ans^^?a
  []
 
-[3] (./dokumentaatio.aux) ) 
+<kaaviot/kasitekaavio.png, id=14, 469.755pt x 139.52126pt>
+File: kaaviot/kasitekaavio.png Graphic file (type png)
+
+<use kaaviot/kasitekaavio.png>
+Package pdftex.def Info: kaaviot/kasitekaavio.png used on input line 54.
+(pdftex.def)             Requested size: 328.82626pt x 97.6642pt.
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd) [3 <./kaaviot/kasitekaavio.p
+ng>] <kaaviot/tietokantakaavio.png, id=20, 739.76375pt x 493.845pt>
+File: kaaviot/tietokantakaavio.png Graphic file (type png)
+
+<use kaaviot/tietokantakaavio.png>
+Package pdftex.def Info: kaaviot/tietokantakaavio.png used on input line 93.
+(pdftex.def)             Requested size: 369.88097pt x 246.92189pt.
+
+Overfull \hbox (24.88097pt too wide) in paragraph at lines 93--94
+[] 
+ []
+
+[4] [5 <./kaaviot/tietokantakaavio.png>] (./dokumentaatio.aux) ) 
 Here is how much of TeX's memory you used:
- 2541 strings out of 494397
- 32043 string characters out of 6164584
- 90366 words of memory out of 5000000
- 5793 multiletter control sequences out of 15000+600000
- 5158 words of font info for 19 fonts, out of 8000000 for 9000
+ 2672 strings out of 494397
+ 33869 string characters out of 6164584
+ 100133 words of memory out of 5000000
+ 5903 multiletter control sequences out of 15000+600000
+ 6857 words of font info for 27 fonts, out of 8000000 for 9000
  372 hyphenation exceptions out of 8191
- 37i,5n,24p,509b,113s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on dokumentaatio.pdf (3 pages, 102888 bytes).
+ 37i,9n,24p,509b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr10.pfb>
+Output written on dokumentaatio.pdf (5 pages, 162305 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 39 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
