@@ -35,4 +35,8 @@ class HelloWorldController extends BaseController {
     public static function searchPage() {
         View::make('suunnitelmat/searchPage.html');
     }
+
+    public static function viewTag($id) {
+        View::make('suunnitelmat/viewTag.html')
+    }
 }

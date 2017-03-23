@@ -31,3 +31,8 @@ $routes->get('/editmessage/:id', function($id) {
 $routes->get('/search', function() {
     HelloWorldController::searchPage();
 });
+
+$routes->get('/tag/:id', function($id) {
+    HelloWorldController::viewTag($id);
+});
+
