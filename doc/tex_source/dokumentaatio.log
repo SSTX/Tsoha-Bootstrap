@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2017.1.25)  23 MAR 2017 23:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2017.1.25)  23 MAR 2017 23:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -445,42 +445,42 @@ Package pdftex.def Info: kaaviot/kayttotapauskaavio.png used on input line 19.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./kaaviot/kayttotapaus
 kaavio.png>]
-Overfull \hbox (4.21593pt too wide) in paragraph at lines 40--41
+Overfull \hbox (4.21593pt too wide) in paragraph at lines 46--47
  \OT1/cmr/bx/n/10 Poista tiedosto[] \OT1/cmr/m/n/10 K^^?aytt^^?aj^^?an val-it-s
 ema ja omis-tama tiedosto pois-te-taan. Tiedos-
  []
 
 
-Overfull \hbox (31.78633pt too wide) in paragraph at lines 45--46
+Overfull \hbox (31.78633pt too wide) in paragraph at lines 51--52
  \OT1/cmr/bx/n/10 Muokkaa vi-esti^^?a[] \OT1/cmr/m/n/10 Rek-ister^^?oitynyt k^^
 ?aytt^^?aj^^?a voi muokata mink^^?a tahansa l^^?ahett^^?am^^?ans^^?a
  []
 
-<kaaviot/kasitekaavio.png, id=14, 469.755pt x 139.52126pt>
+<kaaviot/kasitekaavio.png, id=14, 193.72375pt x 401.5pt>
 File: kaaviot/kasitekaavio.png Graphic file (type png)
 
 <use kaaviot/kasitekaavio.png>
-Package pdftex.def Info: kaaviot/kasitekaavio.png used on input line 54.
-(pdftex.def)             Requested size: 328.82626pt x 97.6642pt.
-
+Package pdftex.def Info: kaaviot/kasitekaavio.png used on input line 60.
+(pdftex.def)             Requested size: 135.60568pt x 281.04808pt.
+ [3]
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd)
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd) [3 <./kaaviot/kasitekaavio.p
-ng>] <kaaviot/tietokantakaavio.png, id=20, 739.76375pt x 493.845pt>
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd) [4 <./kaaviot/kasitekaavio.p
+ng>] <kaaviot/tietokantakaavio.png, id=23, 739.76375pt x 493.845pt>
 File: kaaviot/tietokantakaavio.png Graphic file (type png)
 
 <use kaaviot/tietokantakaavio.png>
-Package pdftex.def Info: kaaviot/tietokantakaavio.png used on input line 93.
+Package pdftex.def Info: kaaviot/tietokantakaavio.png used on input line 99.
 (pdftex.def)             Requested size: 369.88097pt x 246.92189pt.
 
-Overfull \hbox (24.88097pt too wide) in paragraph at lines 93--94
+Overfull \hbox (24.88097pt too wide) in paragraph at lines 99--100
 [] 
  []
 
-[4] [5 <./kaaviot/tietokantakaavio.png>] (./dokumentaatio.aux) ) 
+[5] [6 <./kaaviot/tietokantakaavio.png>] (./dokumentaatio.aux) ) 
 Here is how much of TeX's memory you used:
  2672 strings out of 494397
  33869 string characters out of 6164584
- 100133 words of memory out of 5000000
+ 99133 words of memory out of 5000000
  5903 multiletter control sequences out of 15000+600000
  6857 words of font info for 27 fonts, out of 8000000 for 9000
  372 hyphenation exceptions out of 8191
@@ -489,10 +489,10 @@ Here is how much of TeX's memory you used:
 mf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmr10.pfb>
-Output written on dokumentaatio.pdf (5 pages, 162305 bytes).
+Output written on dokumentaatio.pdf (6 pages, 165078 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
- 22 compressed objects within 1 object stream
+ 42 PDF objects out of 1000 (max. 8388607)
+ 24 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

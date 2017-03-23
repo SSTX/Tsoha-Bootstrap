@@ -17,9 +17,15 @@ Sovellus toteutetaan PHP:llä ja se toimii Helsingin yliopiston users-palvelimel
 
 \section{Käyttötapaukset}
 \includegraphics[scale=0.7]{kaaviot/kayttotapauskaavio.png}
+\subsection{Käyttäjäryhmät}
+\paragraph{Rekisteröimätön käyttäjä}
+Kuka tahansa web-käyttäjä. Tunnistautumaton käyttäjä.
 
+\paragraph{Rekisteröitynyt käyttäjä}
+Käyttäjä, joka on luonut tunnukset sivulle. Tunnistautunut käyttäjä.
 
-\subsection{Rekisteröimättömän käyttäjän käyttötapaukset}
+\subsection{Käyttötapaukset käyttäjäryhmittäin}
+\subsubsection{Rekisteröimätön käyttäjä}
 \paragraph{Lisää tiedosto}
 Käyttäjä lisää tiedoston palvelimelle.
 \paragraph{Lisää viesti}
@@ -31,7 +37,7 @@ Luodaan käyttäjälle käyttäjätunnus. Tämän jälkeen käyttäjä voi kirja
 Käyttäjä tunnistautuu järjestelmään.
 
 
-\subsection{Rekisteröityneen käyttäjän käyttötapaukset}
+\subsubsection{Rekisteröitynyt käyttäjä}
 \paragraph{Lisää tiedosto}
 Käyttäjä lisää tiedoston palvelimelle.
 \paragraph{Muokkaa tiedostoa}
@@ -53,14 +59,14 @@ Käyttäjä kirjataan ulos.
 \subsection{Käsitekaavio}
 \includegraphics[scale=0.7]{kaaviot/kasitekaavio.png}
 \subsection{Käsitteiden attribuutit}
-\subsubsection{User}
+\subsubsection{Käyttäjä}
 \begin{tabularx}{\textwidth}{|R|R|R|} \hline
 \textbf{Attribuutti} & \textbf{Arvojoukko} & \textbf{Kuvailu}\\ \hline
 Käyttäjänimi & Merkkijono max. 50 merkkiä & Käyttäjän rekisteröitymisen yhteydessä valitsema käyttäjänimi\\ \hline
 Salasanatiiviste & Merkkijono & Käyttäjän salasanasta tehty tiiviste\\ \hline
 \end{tabularx}
 
-\subsubsection{File}
+\subsubsection{Tiedosto}
 \begin{tabularx}{\textwidth}{|R|R|R|} \hline
 \textbf{Attribuutti} & \textbf{Arvojoukko} & \textbf{Kuvailu}\\ \hline
 Tiedoston lisääjä & Käyttäjä & Käyttäjä, joka latasi tiedoston palvelimelle\\ \hline
@@ -72,14 +78,14 @@ Tiedoston koko & Kokonaisluku & Tiedoston koko tavuina\\ \hline
 Tiedostotyyppi & Merkkijono & Tiedoston MIME-tyyppi esim. text/plain\\ \hline
 \end{tabularx}
 
-\subsubsection{Tag}
+\subsubsection{Tägi}
 \begin{tabularx}{\textwidth}{|R|R|R|} \hline
 \textbf{Attribuutti} & \textbf{Arvojoukko} & \textbf{Kuvailu}\\ \hline
 Tägin nimi & Merkkijono & Nimi joka näytetään tiedoston yhteydessä ja jolla tiedostoja haetaan\\ \hline
 Tägin kuvaus & Merkkijono & Taustatietoa tagista, konteksti, milloin käytetään jne.\\ \hline
 \end{tabularx}
 
-\subsubsection{Message}
+\subsubsection{Viesti}
 \begin{tabularx}{\textwidth}{|R|R|R|} \hline
 \textbf{Attribuutti} & \textbf{Arvojoukko} & \textbf{Kuvailu}\\ \hline
 Viestin lisääjä & Käyttäjä & Käyttäjä, joka kirjoitti viestin\\ \hline
@@ -89,6 +95,6 @@ Leipäteksti & Merkkijono & Viestin varsinainen sisältö\\ \hline
 Aikaleima & Aikaleima ja aikavyöhyke & Aika, jolloin viesti saapui palvelimelle\\ \hline
 \end{tabularx}
 
-\subsection{Tietokantakaavio}
+\section{Relaatiotietokantakaavio}
 \includegraphics[scale=0.5]{kaaviot/tietokantakaavio.png}
 \end{document}
