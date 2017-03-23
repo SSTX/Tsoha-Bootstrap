@@ -7,7 +7,7 @@
             <strong>Filename</strong>
         </div>
         <div class="col-sm-9">
-            test file
+            <a href="http://ttiira.users.cs.helsinki.fi/files/testfile.txt">test file</a>
         </div>
     </div>
     <div class="row">
@@ -51,6 +51,41 @@
             <p>this is a file</p>
         </div>
     </div>
-
+    <a href="{{base_path}}/editfile/1" class="btn btn-default">Edit</a>
+    <button class="btn btn-danger">Delete</button>
 </div>
+
+
+<div class="messages-container container-fluid">
+    <div class="message row">
+
+        <div class="col-sm-2">
+            <strong>arvostelija</strong>
+            1999-12-12 11:22:33
+        </div>
+
+        <div class="col-sm-9">
+            arvostelen tiedoston 5/5
+        </div>
+        <div class="col-sm-1">
+            <a href="{{base_path}}/editmessage/1" class="btn btn-default">Edit</a>
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+    <div class="message row">
+        <div class="col-sm-2">
+            <strong>kommentoija</strong>
+            2037-11-10 21:10:09
+        </div>
+
+        <div class="col-sm-9">
+            Olen kommentoija. Tämä on kommenttini. Lisäämällä laadukkaita kommentteja parannan web-sivun laatua.
+        </div>
+        <div class="col-sm-1">
+            <a href="{{base_path}}/editmessage/1" class="btn btn-default">Edit</a>
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

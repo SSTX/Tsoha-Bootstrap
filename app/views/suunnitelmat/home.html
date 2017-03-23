@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% use "search.html" %}
+
+
+{% block content %}
+<h1>Welcome to tsoha-fileboard!</h1>
+<h2>Things you can do</h2>
+<ul>
+    <li><a href="{{base_path}}/filelist">List all files</a></li>
+    <li><a href="{{base_path}}/search">Search for files</a></li>
+    <li><a href="{{base_path}}/upload">Upload a file</a></li>
+</ul>
+{% endblock %}
+
