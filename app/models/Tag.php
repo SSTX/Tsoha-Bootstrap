@@ -22,7 +22,7 @@ class Tag extends BaseModel {
     public static function collect($row) {
         return new Tag(array(
             'id' => $row['tag_id'],
-            'name' => $row['file_name'],
+            'name' => $row['tagged_file'],
             'description' => $row['tag_description']
         ));
     }
