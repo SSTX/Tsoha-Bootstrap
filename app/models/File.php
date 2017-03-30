@@ -105,7 +105,11 @@ class File extends BaseModel {
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this.id));
         $rows = $query->fetchAll();
-
+        $tags = array();
+        foreach($rows as $row) {
+            $tags[] = Tag::collect($row);
+        }
+        return $tags;
     }
 
 }
