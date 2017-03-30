@@ -9,6 +9,7 @@ class FileController extends BaseController {
 
     public static function viewFile($id) {
         $file = File::find($id);
+        Kint::dump($file);
         View::make('file/viewFile.html', array('file' => $file));
     }
 
