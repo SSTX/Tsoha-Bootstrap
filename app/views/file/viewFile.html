@@ -7,7 +7,7 @@
             <strong>Filename</strong>
         </div>
         <div class="col-sm-9">
-            <a href="http://ttiira.users.cs.helsinki.fi/files/testfile.txt">test file</a>
+            <a href="http://ttiira.users.cs.helsinki.fi/files/{{file.path}}">{{file.name}}</a>
         </div>
     </div>
     <div class="row">
@@ -15,7 +15,7 @@
             <strong>Size</strong>
         </div>
         <div class="col-sm-9">
-            3 kB
+            {{file.size}}
         </div>
     </div>
     <div class="row">
@@ -23,7 +23,7 @@
             <strong>Filetype</strong>
         </div>
         <div class="col-sm-9">
-            text/plain
+            {{file.type}}
         </div>
     </div>
     <div class="row">
@@ -31,7 +31,7 @@
             <strong>Uploader</strong>
         </div>
         <div class="col-sm-9">
-            test user
+            {{file.author.name}}
         </div>
     </div>
     <div class="row">
@@ -39,7 +39,7 @@
             <strong>Time submitted</strong>
         </div>
         <div class="col-sm-9">
-            1999-12-12 22:00:11
+            {{file.submitTime}}
         </div>
     </div>
     <div class="row">
@@ -47,7 +47,11 @@
             <strong>Tags</strong>
         </div>
         <div class="col-sm-9">
-            <p>#some #tags</p>
+            <ul class="list-inline">
+            {% for tag in file.tags() %}
+                <li> <a href="{{base_path}}/tag/{{tag.id}}">{{tag.name}}</a> </li>
+            {% endfor %}
+            </ul>
         </div>
     </div>
     <div class="row">
@@ -55,44 +59,32 @@
             <strong>Description</strong>
         </div>
         <div class="col-sm-9">
-            <p>this is a file</p>
+            <p>{{file.description}}</p>
         </div>
     </div>
-    <a href="{{base_path}}/editfile/1" class="btn btn-default">Edit</a>
+    <a href="{{base_path}}/editfile/{{file.id}}" class="btn btn-default">Edit</a>
     <button class="btn btn-danger">Delete</button>
 </div>
 
 
 <div class="messages-container container-fluid">
+    {% for message in file.messages()%}
+        
     <div class="message row">
-
         <div class="col-sm-2">
-            <strong>arvostelija</strong>
-            1999-12-12 11:22:33
+            <strong>{{message.author.name}}</strong>
+            {{message.submitTime}}
         </div>
 
         <div class="col-sm-9">
-            arvostelen tiedoston 5/5
+            {{message.body}}
         </div>
         <div class="col-sm-1">
-            <a href="{{base_path}}/editmessage/1" class="btn btn-default">Edit</a>
+            <a href="{{base_path}}/editmessage/{{message.id}}" class="btn btn-default">Edit</a>
             <button class="btn btn-danger">Delete</button>
         </div>
     </div>
-    <div class="message row">
-        <div class="col-sm-2">
-            <strong>kommentoija</strong>
-            2037-11-10 21:10:09
-        </div>
-
-        <div class="col-sm-9">
-            Olen kommentoija. Tämä on kommenttini. Lisäämällä laadukkaita kommentteja parannan web-sivun laatua.
-        </div>
-        <div class="col-sm-1">
-            <a href="{{base_path}}/editmessage/1" class="btn btn-default">Edit</a>
-            <button class="btn btn-danger">Delete</button>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
