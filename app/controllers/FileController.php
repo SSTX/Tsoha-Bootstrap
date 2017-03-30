@@ -31,7 +31,7 @@ class FileController extends BaseController {
             'type' => $type,
         ));
         move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
-        chmod($movepath, 0755);
+        chmod($movepath, 0744);
         $file->save();
         Redirect::to('/file/' . $file->id);
     }
