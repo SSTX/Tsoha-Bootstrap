@@ -21,9 +21,9 @@ class Message extends BaseModel {
 
     public static function collect($row) {
         return new Message(array(
-            'id' => row['message_id'],
+            'id' => $row['message_id'],
             'author' => User::find($row['message_author']),
-            'relatedFile' => File::find(row['message_related_file']),
+            'relatedFile' => File::find($row['message_related_file']),
             'subject' => $row['message_subject'],
             'body' => $row['message_body'],
             'submitTime' => $row['message_submit_time']
