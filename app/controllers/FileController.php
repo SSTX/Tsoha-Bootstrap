@@ -18,7 +18,7 @@ class FileController extends BaseController {
 
     public static function uploadPost() {
         $name =  basename($_FILES['fileInput']['name']);
-        $path = 'files/' . $name
+        $path = 'files/' . $name;
         $movepath = '/home/ttiira/htdocs/files/' . $name;
         $size = $_FILES['fileInput']['size'];
         $type = $_FILES['fileInput']['type'];
