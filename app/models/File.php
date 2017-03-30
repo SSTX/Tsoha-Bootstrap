@@ -103,7 +103,7 @@ class File extends BaseModel {
             .'AND tagged_file.tag = tag.tag_id '
             .'AND file_id = :id';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('id' => $this.id));
+        $query->execute(array('id' => $this->id));
         $rows = $query->fetchAll();
         $tags = array();
         foreach($rows as $row) {
