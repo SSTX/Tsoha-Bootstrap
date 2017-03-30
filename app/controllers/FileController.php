@@ -29,7 +29,7 @@ class FileController extends BaseController {
             'path' => $path,
             'type' => $type,
         ));
-        move_uploaded_file($_FILES['fileInput']['tmp_name']], $path);
+        move_uploaded_file($_FILES['fileInput']['tmp_name'], $path);
         $file->save();
     }
 
