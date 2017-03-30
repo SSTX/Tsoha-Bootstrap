@@ -12,13 +12,15 @@
         </tr>
     </thead>
     <tbody>
+        {% for file in files %}
         <tr>
-            <td><a href="{{base_path}}/file/1">Test file</a></td>
-            <td>text/plain</td>
-            <td>3 kB</td>
-            <td>2</td>
-            <td>2017-03-21 18:00:00</td>
+            <td><a href="{{base_path}}/file/{{file.id}}">{{file.name}}</a></td>
+            <td>{{file.type}}</td>
+            <td>{{file.size}} B</td>
+            <td>{{file.messageCount()}}</td>
+            <td>{{file.submitTime}}</td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

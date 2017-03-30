@@ -13,7 +13,8 @@ class HelloWorldController extends BaseController {
     }
 
     public static function filelist() {
-        View::make('suunnitelmat/filelist.html');
+        $files = File::all();
+        View::make('suunnitelmat/filelist.html', array('files' => $files));
     }
 
     public static function file() {
