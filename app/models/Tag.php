@@ -19,7 +19,7 @@ class Tag extends BaseModel {
         parent::__construct($attributes);
     }
 
-    private static function collect($row) {
+    public static function collect($row) {
         return new Tag(array(
             'id' => $row['tag_id'],
             'name' => $row['file_name'],
