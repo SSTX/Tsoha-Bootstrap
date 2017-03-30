@@ -54,6 +54,20 @@ class Message extends BaseModel {
         return $message;
     }
 
-   
-
+    public function save() {
+        $stmt = 'INSERT INTO message '
+            .'(message_author, message_related_file, '
+            .'message_subject, message_body, message_submit_time) '
+            .'VALUES (:authorId, :fileId, :subject, :body, now()) '
+            .'RETURNING message_id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array(
+            'authorId' => $this->author->id,
+            'fileId' => $this->relatedFile->id,
+            'subject' => $this->subject,
+            'body' => $this->body
+        ));
+        $row = $query->fetch();
+        $this->id = $row['message_id'];
+    }
 }
