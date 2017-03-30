@@ -99,9 +99,9 @@ class File extends BaseModel {
 
     public function tags() {
         $stmt = 'SELECT tag.* FROM tag,tagged_file,file_metadata WHERE '
-            .'tagged_file.tagged_file = file.file_id '
+            .'tagged_file.tagged_file = file_metadata.file_id '
             .'AND tagged_file.tag = tag.tag_id '
-            .'AND file_id = :id';
+            .'AND file_metadata.file_id = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
         $rows = $query->fetchAll();
