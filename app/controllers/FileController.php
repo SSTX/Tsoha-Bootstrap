@@ -12,8 +12,25 @@ class FileController extends BaseController {
         View::make('file/viewFile.html', array('file' => $file));
     }
 
-    public static function upload() {
+    public static function uploadGet() {
         View::make('file/upload.html');
+    }
+
+    public static function uploadPost() {
+        $name =  basename($_FILES['fileInput']['name']);
+        $path = 'files/' . $name;
+        $size = $_FILES['fileInput']['size'];
+        $type = $_FILES['fileInput']['type'];
+        $desc = $_POST['fileDescription'];
+        $file = new File(array(
+            'name' => $name,
+            'description' => $desc,
+            'size' => $size,
+            'path' => $path,
+            'type' => $type,
+        ));
+        move_uploaded_file($_FILES['fileInput']['tmp_name']], $path);
+        $file->save();
     }
 
     public static function editFile($id) {

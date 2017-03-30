@@ -16,8 +16,12 @@ $routes->get('/file/:id', function($id) {
     FileController::viewFile($id);
 });
 
+$routes->post('/upload', function() {
+    FileController::uploadPost();
+});
+
 $routes->get('/upload', function() {
-    FileController::upload();
+    FileController::uploadGet();
 });
 
 $routes->get('/editfile/:id', function($id) {
