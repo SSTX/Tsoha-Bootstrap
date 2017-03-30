@@ -9,19 +9,19 @@ $routes->get('/hiekkalaatikko', function() {
 });
 
 $routes->get('/filelist', function() {
-    HelloWorldController::filelist();
+    FileController::filelist();
 });
 
 $routes->get('/file/:id', function($id) {
-    HelloWorldController::file($id);
+    FileController::viewFile($id);
 });
 
 $routes->get('/upload', function() {
-    HelloWorldController::upload();
+    FileController::upload();
 });
 
 $routes->get('/editfile/:id', function($id) {
-    HelloWorldController::editFile($id);
+    FileController::editFile($id);
 });
 
 $routes->get('/editmessage/:id', function($id) {
