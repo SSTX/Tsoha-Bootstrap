@@ -13,7 +13,7 @@
  */
 class Tag extends BaseModel {
 
-    public $id, $name, $description
+    public $id, $name, $description;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
