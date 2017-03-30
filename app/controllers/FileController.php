@@ -18,7 +18,8 @@ class FileController extends BaseController {
 
     public static function uploadPost() {
         $name =  basename($_FILES['fileInput']['name']);
-        $path = '/home/ttiira/htdocs/files/' . $name;
+        $path = 'files/' . $name
+        $movepath = '/home/ttiira/htdocs/files/' . $name;
         $size = $_FILES['fileInput']['size'];
         $type = $_FILES['fileInput']['type'];
         $desc = $_POST['fileDescription'];
@@ -29,8 +30,9 @@ class FileController extends BaseController {
             'path' => $path,
             'type' => $type,
         ));
-        move_uploaded_file($_FILES['fileInput']['tmp_name'], $path);
+        move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
         $file->save();
+        Redirect::to('/file/' . $file->id);
     }
 
     public static function editFile($id) {
