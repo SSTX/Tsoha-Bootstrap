@@ -112,4 +112,21 @@ class File extends BaseModel {
         return $tags;
     }
 
+    public function update() {
+        $stmt = 'UPDATE file_metadata '
+                . 'SET file_description = :desc, '
+                . 'file_name = :name '
+                . 'WHERE file_id = :id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('id' => $this->id,
+            'name' => $this->name,
+            'desc' => $this->description));
+    }
+    
+    public function destroy() {
+        $stmt = 'DELETE FROM file_metadata '
+                . 'WHERE file_id = :id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('id' => $this->id));
+    }
 }

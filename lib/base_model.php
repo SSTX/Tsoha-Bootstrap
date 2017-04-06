@@ -25,11 +25,4 @@
       }
       return $errors;
     }
-
-    public function validateNonEmpty($data) {
-        if ($data == NULL || strlen($data) == 0) {
-            $err[] = 'Error: empty field: '
-        }
-    }
-
   }
