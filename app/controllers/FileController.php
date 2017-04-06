@@ -52,8 +52,14 @@ class FileController extends BaseController {
         $params = $_POST;
         $file = File::find($id);
         $file->name = $params['filename'];
-        $file->description= $params['description'];
-        $file->update();
+        $file->description = $params['description'];
+        $validator = $file->validator();
+        if ($validator->validate()) {
+            $file->update();
+            Redirect::to('/file/' . $file->id);
+        } else {
+            Redirect::to('/file' . $file->id . '/edit', $validator->errors());
+        }
     }
     
     public static function destroyFile($id) {
