@@ -1,7 +1,7 @@
-{%macro errorReport(errors)%}
+{%block errorReport%}
 {%for error in errors%}
 <div class="alert alert-danger">
     {{error}}
 </div>
 {%endfor%}
-{%endmacro%}
+{%enblock%}

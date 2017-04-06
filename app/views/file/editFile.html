@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {%import "macro/links.html" as links %}
-{%import "macro/errorReport.html" as errorReport %}
 {% block content %}
 <h2>Edit file</h2>
-{{errorReport.errorReport("#{errors}")}}
+{%use "macro/errorReport.html"%}
 <form class="form-horizontal" method="post">
     <div class="form-group">
         <label for="filename" class="col-sm-2">Filename</label>
