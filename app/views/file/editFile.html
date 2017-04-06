@@ -2,7 +2,7 @@
 {%import "macro/links.html" as links %}
 {% block content %}
 <h2>Edit file</h2>
-{%use "macro/errorReport.html"%}
+{{err.errorReport("#{errors}")}}
 <form class="form-horizontal" method="post">
     <div class="form-group">
         <label for="filename" class="col-sm-2">Filename</label>

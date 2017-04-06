@@ -1,4 +1,4 @@
-{%block errorReport%}
+{%macro errorReport(errors)%}
 {%for origin in errors%}
 {%for error in origin%}
 <div class="alert alert-danger">
@@ -6,4 +6,4 @@
 </div>
 {%endfor%}
 {%endfor%}
-{%endblock%}
+{%endmacro%}
