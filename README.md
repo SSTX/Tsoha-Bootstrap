@@ -6,5 +6,5 @@ Yleisiä linkkejä:
 * [Dokumentaatio](doc/dokumentaatio.pdf)
 
 # Testitunnukset
-Käyttäjänimi: Jalmari
-Salasana: asd
+* Käyttäjänimi: Jalmari
+* Salasana: asd
