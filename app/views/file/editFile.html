@@ -3,7 +3,9 @@
 {% block content %}
 <h2>Edit file</h2>
 {%use "macro/errorReport.html"%}
-{{errors}}
+{%for err in errors%}
+{{err}}
+{%endfor%}
 <form class="form-horizontal" method="post">
     <div class="form-group">
         <label for="filename" class="col-sm-2">Filename</label>
