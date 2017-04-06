@@ -45,7 +45,6 @@ class FileController extends BaseController {
 
     public static function editFileGet($id) {
         $file = File::find($id);
-        Kint::dump();
         View::make('file/editFile.html', array('file' => $file));
     }
     
@@ -59,7 +58,8 @@ class FileController extends BaseController {
             $file->update();
             Redirect::to('/file/' . $file->id);
         } else {
-            Redirect::to('/file/' . $file->id . '/edit', array('errors' => $validator->errors()));
+            Kint::dump($validator->errors());
+            //Redirect::to('/file/' . $file->id . '/edit', array('errors' => $validator->errors()));
         }
     }
     
