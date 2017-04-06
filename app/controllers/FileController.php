@@ -59,7 +59,8 @@ class FileController extends BaseController {
             $file->update();
             Redirect::to('/file/' . $file->id);
         } else {
-            Redirect::to('/file/' . $file->id . '/edit', array('errors' => $validator->errors()));
+            print_r($validator->errors());
+            //Redirect::to('/file/' . $file->id . '/edit', array('errors' => $validator->errors()));
         }
     }
     
