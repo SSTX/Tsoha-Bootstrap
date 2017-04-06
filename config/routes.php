@@ -48,3 +48,10 @@ $routes->get('/tag/:id', function($id) {
     HelloWorldController::viewTag($id);
 });
 
+$routes->get('/login', function() {
+    UserController::loginGet();
+});
+
+$routes->post('/login', function() {
+    UserController::loginPost();
+});

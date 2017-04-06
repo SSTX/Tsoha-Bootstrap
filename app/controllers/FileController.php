@@ -38,7 +38,7 @@ class FileController extends BaseController {
             $file->save();
             Redirect::to('/file/' . $file->id);
         } else {
-            Redirect::to('/upload', array('file' => $file, 'errors' => $validator->errors()));
+            View::make('file/upload.html', array('file' => $file, 'errors' => $validator->errors()));
         }
         
     }

@@ -14,8 +14,9 @@
 class UserController extends BaseController {
 
     public static function loginGet() {
-        View::Make
+        View::Make('user/login.html');
     }
+
     public static function loginPost() {
         $params = $_POST;
         $user = User::authenticate($params['username'], $params['password']);
