@@ -1,6 +1,6 @@
 {%block errorReport%}
 {%for origin in errors%}
-{%for error in origin%}
+{%for error in errors[origin]%}
 <div class="alert alert-danger">
     {{error}}
 </div>
