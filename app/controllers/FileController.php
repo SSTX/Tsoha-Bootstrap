@@ -1,7 +1,8 @@
 <?php
 
 class FileController extends BaseController {
-
+    public static $baseFilePath = '/home/ttiira/htdocs/files/';
+    
     public static function filelist() {
         $files = File::all();
         View::make('file/filelist.html', array('files' => $files));
@@ -19,7 +20,7 @@ class FileController extends BaseController {
     public static function uploadPost() {
         $name =  basename($_FILES['fileInput']['name']);
         $path = 'files/' . $name;
-        $movepath = '/home/ttiira/htdocs/files/' . $name;
+        $movepath = FileController::$baseFilePath . $name;
         $size = $_FILES['fileInput']['size'];
         $type = $_FILES['fileInput']['type'];
         $desc = $_POST['fileDescription'];
@@ -36,8 +37,23 @@ class FileController extends BaseController {
         Redirect::to('/file/' . $file->id);
     }
 
-    public static function editFile($id) {
+    public static function editFileGet($id) {
         $file = File::find($id);
         View::make('file/editFile.html', array('file' => $file));
+    }
+    
+    public static function editFilePost($id) {
+        $params = $_POST;
+        $file = File::find($id);
+        $file->name = $params['filename'];
+        $file->description= $params['description'];
+        $file->update();
+    }
+    
+    public static function destroyFile($id) {
+        $file = File::find($id);
+        unlink(FileController::$baseFilePath . $file->name);
+        $file->destroy();
+        Redirect::to('/filelist');
     }
 }

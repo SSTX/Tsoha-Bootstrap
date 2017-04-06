@@ -24,11 +24,19 @@ $routes->get('/upload', function() {
     FileController::uploadGet();
 });
 
-$routes->get('/editfile/:id', function($id) {
-    FileController::editFile($id);
+$routes->get('/file/:id/edit', function($id) {
+    FileController::editFileGet($id);
 });
 
-$routes->get('/editmessage/:id', function($id) {
+$routes->post('/file/:id/edit', function($id) {
+    FileController::editFilePost($id);
+});
+
+$routes->get('/file/:id/destroy', function($id) {
+    FileController::destroyFile($id);
+});
+
+$routes->get('/message/:id/edit', function($id) {
     HelloWorldController::editMessage($id);
 });
 

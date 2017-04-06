@@ -62,4 +62,20 @@ class User extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['user_id'];
     }
+    
+    public static function authenticate($username, $password) {
+        $hash = crypt($password);
+        $stmt = 'SELECT * FROM registered_user '
+                . 'WHERE user_name = :name '
+                . 'AND user_pw_hash = :hash';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('name' => $username,
+            'hash' => $hash));
+        $row = $query->fetch();
+        $user = NULL;
+        if ($row) {
+            $user = User::collect($row);
+        }
+        return $user;
+    }
 }

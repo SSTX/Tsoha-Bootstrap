@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
+{% import "macro/fileDataItem.html" as dataItem %}
+{% import "macro/links.html" as links %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -7,69 +8,34 @@
             <strong>Filename</strong>
         </div>
         <div class="col-sm-9">
-            <a href="http://ttiira.users.cs.helsinki.fi/{{file.path}}">{{file.name}}</a>
+            {{links.fileLink("#{file.id}", "#{file.name}")}}
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <strong>Size</strong>
-        </div>
-        <div class="col-sm-9">
-            {{file.size}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <strong>Filetype</strong>
-        </div>
-        <div class="col-sm-9">
-            {{file.type}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <strong>Uploader</strong>
-        </div>
-        <div class="col-sm-9">
-            {{file.author.name}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <strong>Time submitted</strong>
-        </div>
-        <div class="col-sm-9">
-            {{file.submitTime}}
-        </div>
-    </div>
+    {{dataItem.fileDataItem("Size", "#{file.size}")}}
+    {{dataItem.fileDataItem("Filetype", "#{file.type}")}}
+    {{dataItem.fileDataItem("Uploader", "#{file.author.name}")}}
+    {{dataItem.fileDataItem("Time submitted", "#{file.submitTime}")}}
     <div class="row">
         <div class="col-sm-3">
             <strong>Tags</strong>
         </div>
         <div class="col-sm-9">
             <ul class="list-inline">
-            {% for tag in file.tags() %}
+                {% for tag in file.tags() %}
                 <li> <a href="{{base_path}}/tag/{{tag.id}}">{{tag.name}}</a> </li>
-            {% endfor %}
+                {% endfor %}
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <strong>Description</strong>
-        </div>
-        <div class="col-sm-9">
-            <p>{{file.description}}</p>
-        </div>
-    </div>
-    <a href="{{base_path}}/editfile/{{file.id}}" class="btn btn-default">Edit</a>
-    <button class="btn btn-danger">Delete</button>
+    {{dataItem.fileDataItem("Description", "#{file.description}")}}
+    <a href="{{base_path}}/file/{{file.id}}/edit" class="btn btn-default">Edit</a>
+    <a href="{{base_path}}/file/{{file.id}}/destroy" class="btn btn-danger">Delete</a>
 </div>
 
 
 <div class="messages-container container-fluid">
     {% for message in file.messages()%}
-        
+
     <div class="message row">
         <div class="col-sm-2">
             <strong>{{message.author.name}}</strong>
@@ -79,7 +45,7 @@
             {{message.body}}
         </div>
         <div class="col-sm-1">
-            <a href="{{base_path}}/editmessage/{{message.id}}" class="btn btn-default">Edit</a>
+            <a href="{{base_path}}/message/{{message.id}}/edit" class="btn btn-default">Edit</a>
             <button class="btn btn-danger">Delete</button>
         </div>
     </div>
