@@ -31,10 +31,16 @@ class FileController extends BaseController {
             'path' => $path,
             'type' => $type,
         ));
-        move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
-        chmod($movepath, 0744);
-        $file->save();
-        Redirect::to('/file/' . $file->id);
+        $validator = $file->validator();
+        if ($validator->validate()) {
+            move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
+            chmod($movepath, 0744);
+            $file->save();
+            Redirect::to('/file/' . $file->id);
+        } else {
+            Redirect::to('/upload', array('file' => $file, 'errors' => $validator->errors()));
+        }
+        
     }
 
     public static function editFileGet($id) {

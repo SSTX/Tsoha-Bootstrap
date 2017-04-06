@@ -33,6 +33,14 @@ class File extends BaseModel {
         ));
     }
 
+    public function validator() {
+        $v = new Valitron\Validator(get_object_vars($this));
+        $v->rule('required', array('name', 'path', 'size', 'type', 'submitTime'));
+        $v->rule('optional', array('id', 'author'));
+        $v->rule('integer', array('id', 'size'));
+        $v->rule('lengthMin', array('path', 'type', 'name'), 1);
+        return $v;
+    }
     public static function all() {
         $stmt = 'SELECT * FROM file_metadata';
         $query = DB::connection()->prepare($stmt);
