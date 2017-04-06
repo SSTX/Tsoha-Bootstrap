@@ -59,7 +59,7 @@ class FileController extends BaseController {
             $file->update();
             Redirect::to('/file/' . $file->id);
         } else {
-            View::make('file/editFile.html', array('file' => $file, 'errors' => $validator->errors()));
+            Redirect::to('/file/' . $file->id . '/edit', array('errors' => $validator->errors()));
         }
     }
     
