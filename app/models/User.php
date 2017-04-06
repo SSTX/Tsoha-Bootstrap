@@ -64,7 +64,7 @@ class User extends BaseModel {
     }
     
     public static function authenticate($username, $password) {
-        $hash = crypt($password);
+        $hash = md5($password);
         $stmt = 'SELECT * FROM registered_user '
                 . 'WHERE user_name = :name '
                 . 'AND user_pw_hash = :hash';
