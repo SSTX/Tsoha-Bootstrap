@@ -23,7 +23,10 @@ class UserController extends BaseController {
         if ($user == NULL) {
             View::make('user/login.html', array('error' => 'Invalid username or password',
                 'username' => $params['username']));
+        } else {
+            Redirect::to('/');
         }
+        
     }
     
     
