@@ -59,7 +59,7 @@ class FileController extends BaseController {
             Redirect::to('/file/' . $file->id);
         } else {
             Kint::dump();
-            //Redirect::to('/file/' . $file->id . '/edit', $validator->errors());
+            Redirect::to('/file/' . $file->id . '/edit', $validator->errors());
         }
     }
     
