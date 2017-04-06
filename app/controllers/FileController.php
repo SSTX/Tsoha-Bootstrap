@@ -45,8 +45,8 @@ class FileController extends BaseController {
 
     public static function editFileGet($id) {
         $file = File::find($id);
-        View::make('file/editFile.html', array('file' => $file));
         Kint::dump();
+        View::make('file/editFile.html', array('file' => $file));
     }
     
     public static function editFilePost($id) {
