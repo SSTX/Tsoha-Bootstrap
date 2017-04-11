@@ -24,7 +24,7 @@ class FileController extends BaseController {
         $type = '';
         if (!empty($_FILES['fileInput']['tmp_name'])) {
             $ext = pathinfo($_FILES['fileInput']['name'], PATHINFO_EXTENSION);
-            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . $ext;
+            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . '.' . $ext;
             $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         }
         $movepath = FileController::$basePath . $path;
