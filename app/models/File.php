@@ -35,12 +35,36 @@ class File extends BaseModel {
 
     public function validator() {
         $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', array('name', 'path', 'size', 'type', 'submitTime'));
+        $v->rule('required', array('name', 'path', 'size', 'type'));
         $v->rule('optional', array('id', 'author'));
         $v->rule('integer', array('id', 'size'));
+        $v->rule('max', 'size', 3000000);
         $v->rule('lengthMin', array('path', 'type', 'name'), 1);
         return $v;
     }
+
+    public function prettyFilesize() {
+        $bytes = $this->size;
+        $mul = 0;
+        while ($bytes >= 1000) {
+            $bytes = $bytes / 1000;
+            $mul = $mul + 1;
+        }
+        $unit = 'GB';
+        if ($mul == 0) {
+            $unit = 'B';
+        } else if ($mul == 1) {
+            $unit = 'kB';
+        } else if ($mul == 2) {
+            $unit = 'MB';
+        }
+        return $bytes . ' ' . $unit;
+    }
+
+    public function prettySubmitTime() {
+        return strtotime($this->submitTime);
+    }
+
     public static function all() {
         $stmt = 'SELECT * FROM file_metadata';
         $query = DB::connection()->prepare($stmt);

@@ -1,7 +1,7 @@
 <?php
 
 class FileController extends BaseController {
-    public static $baseFilePath = '/home/ttiira/htdocs/files/';
+    public static $basePath = '/home/ttiira/htdocs/';
     
     public static function filelist() {
         $files = File::all();
@@ -18,11 +18,12 @@ class FileController extends BaseController {
     }
 
     public static function uploadPost() {
+        $uploadErrors = array();
         $name =  basename($_FILES['fileInput']['name']);
-        $path = 'files/' . $name;
-        $movepath = FileController::$baseFilePath . $name;
+        $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']);
+        $movepath = FileController::$basePath . $path;
         $size = $_FILES['fileInput']['size'];
-        $type = $_FILES['fileInput']['type'];
+        $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         $desc = $_POST['fileDescription'];
         $file = new File(array(
             'name' => $name,
@@ -31,14 +32,22 @@ class FileController extends BaseController {
             'path' => $path,
             'type' => $type,
         ));
+        if (!isset($FILES['fileInput']['error']) || is_array($FILES['fileInput']['error'])) {
+            $uploadErrors[] = 'Invalid parameters';
+        } else if (file_exists($movepath)) {
+            $uploadErrors[] = 'File already exists';
+        } else if ($FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
+            $uploadErrors[] = 'No file selected';
+        }
         $validator = $file->validator();
-        if ($validator->validate()) {
+        if ($validator->validate() && empty($uploadErrors)) {
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
             chmod($movepath, 0744);
             $file->save();
             Redirect::to('/file/' . $file->id);
         } else {
-            View::make('file/upload.html', array('file' => $file, 'errors' => $validator->errors()));
+            $err = array_merge($validator->errors(), $uploadErrors);
+            View::make('file/upload.html', array('file' => $file, 'errors' => $err));
         }
         
     }

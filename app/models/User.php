@@ -64,18 +64,18 @@ class User extends BaseModel {
     }
     
     public static function authenticate($username, $password) {
-        $hash = md5($password);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = 'SELECT * FROM registered_user '
-                . 'WHERE user_name = :name '
-                . 'AND user_pw_hash = :hash';
+                . 'WHERE user_name = :name';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('name' => $username,
-            'hash' => $hash));
+        $query->execute(array('name' => $username));
         $row = $query->fetch();
-        $user = NULL;
         if ($row) {
             $user = User::collect($row);
+            if (password_verify($password, $user->pwHash)) {
+                return $user;
+            }
         }
-        return $user;
+        return NULL;
     }
 }
