@@ -58,13 +58,13 @@
     {% endfor %}
 </div>
 <form class="form-horizontal" action="{{base_path}}/file/{{file.id}}/postmessage">
-    <div class="form-control">
-        <label for="subject">Message subject</label>
-        <input type="text" name="subject" id="subject" value="{{message.subject}}">
+    <div class="form-group">
+        <label for="subject" class="col-sm-2 control-label">Message subject</label>
+        <input type="text" class="col-sm-10 form-control" name="subject" id="subject" value="{{message.subject}}">
     </div>
-    <div class="form-control">
-        <label for="body">Message body</label>
-        <textarea name="body" id="body" rows="5">{{message.body}}</textarea>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="body">Message body</label>
+        <textarea class="col-sm-10 form-control" name="body" id="body" rows="5">{{message.body}}</textarea>
     </div>
 </form>
 {% endblock %}
