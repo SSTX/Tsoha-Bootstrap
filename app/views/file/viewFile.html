@@ -44,9 +44,9 @@
 
     <div class="message row">
         <div class="col-sm-4">
-            {{dataItem.messageDataItem("Subject", "#(message.subject)")}}
-            {{dataItem.messageDataItem("Author", "#(message.author.name)")}}
-            {{dataItem.messageDataItem("Time submitted", "#(message.prettySubmitTime())")}}
+            {{dataItem.messageDataItem("Subject", "#{message.subject}")}}
+            {{dataItem.messageDataItem("Author", "#{message.author.name}")}}
+            {{dataItem.messageDataItem("Time", "#{message.prettySubmitTime()}")}}
         </div>
         <div class="col-sm-8">
             {{message.body}}
