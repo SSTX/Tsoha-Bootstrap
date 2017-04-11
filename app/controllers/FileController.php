@@ -32,7 +32,7 @@ class FileController extends BaseController {
         $desc = $_POST['fileDescription'];
         if (file_exists($movepath)) {
             $uploadErrors[] = 'File already exists';
-        } else if ($FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
+        } else if ($_FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
             $uploadErrors[] = 'No file selected';
         }
         $file = new File(array(
