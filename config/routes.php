@@ -42,19 +42,11 @@ $routes->get('/file/:id/destroy', function($id) {
 });
 
 $routes->get('/message/:id/edit', function($id) {
-    HelloWorldController::editMessage($id);
+    MessageController::editMessage($id);
 });
 
 $routes->get('/message/:id/destroy', function($id) {
-    HelloWorldController::destroyMessage($id);
-});
-
-$routes->get('/search', function() {
-    HelloWorldController::searchPage();
-});
-
-$routes->get('/tag/:id', function($id) {
-    HelloWorldController::viewTag($id);
+    MessageController::destroyMessage($id);
 });
 
 $routes->get('/login', function() {
@@ -65,3 +57,10 @@ $routes->post('/login', function() {
     UserController::loginPost();
 });
 
+$routes->get('/search', function() {
+    HelloWorldController::searchPage();
+});
+
+$routes->get('/tag/:id', function($id) {
+    HelloWorldController::viewTag($id);
+});
