@@ -25,4 +25,8 @@ class BaseModel{
         }
         return $errors;
     }
+
+    public function prettySubmitTime() {
+        return date('Y-m-d H:i:s', strtotime($this->submitTime));
+    }
 }

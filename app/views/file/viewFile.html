@@ -38,25 +38,27 @@
     <a href="{{base_path}}/file/{{file.id}}/destroy" class="btn btn-danger">Delete</a>
 </div>
 
-
+<!-- List messages -->
 <div class="messages-container container-fluid">
     {% for message in file.messages()%}
 
     <div class="message row">
         <div class="col-sm-2">
             <strong>{{message.author.name}}</strong>
-            {{message.submitTime}}
         </div>
         <div class="col-sm-9">
+            <div><strong>{{message.subject}}</strong>{{message.prettySubmitTime()}}</div>
             {{message.body}}
         </div>
         <div class="col-sm-1">
             <a href="{{base_path}}/message/{{message.id}}/edit" class="btn btn-default">Edit</a>
-            <button class="btn btn-danger">Delete</button>
+            <a href="{{base_path}}/message/{{message.id}}/destroy" class="btn btn-danger">Delete</a>
         </div>
     </div>
     {% endfor %}
 </div>
+
+<!-- Post message form -->
 <div class="container-fluid">
     <form class="form-horizontal" method="post" action="{{base_path}}/file/{{file.id}}/postmessage">
         <div class="form-group">
