@@ -80,12 +80,15 @@ class Message extends BaseModel {
             .'VALUES (:authorId, :fileId, :subject, :body, now()) '
             .'RETURNING message_id';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array(
-            'authorId' => $this->author->id,
+        $params = array(
             'fileId' => $this->relatedFile->id,
             'subject' => $this->subject,
             'body' => $this->body
-        ));
+        );
+        if (!empty($this->author)) {
+            $params['authorId'] = $this->author->id;
+        }
+        $query->execute($params);
         $row = $query->fetch();
         $this->id = $row['message_id'];
     }
