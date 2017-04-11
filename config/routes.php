@@ -46,7 +46,7 @@ $routes->get('/message/:id/edit', function($id) {
 });
 
 $routes->get('/message/:id/destroy', function($id) {
-    HelloWorldController::editMessage($id);
+    HelloWorldController::destroyMessage($id);
 });
 
 $routes->get('/search', function() {
