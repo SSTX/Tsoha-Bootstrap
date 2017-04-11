@@ -82,6 +82,7 @@ class Message extends BaseModel {
         $query = DB::connection()->prepare($stmt);
         $params = array(
             'fileId' => $this->relatedFile->id,
+            'authorId' => null,
             'subject' => $this->subject,
             'body' => $this->body
         );
