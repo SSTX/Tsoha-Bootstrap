@@ -20,18 +20,14 @@ class FileController extends BaseController {
     public static function uploadPost() {
         $uploadErrors = array();
         $name =  basename($_FILES['fileInput']['name']);
-        $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']);
+        $path = '';
+        if (!empty($_FILES['fileInput']['tmp_name'])) {
+            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']);
+        }
         $movepath = FileController::$basePath . $path;
         $size = $_FILES['fileInput']['size'];
         $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         $desc = $_POST['fileDescription'];
-        $file = new File(array(
-            'name' => $name,
-            'description' => $desc,
-            'size' => $size,
-            'path' => $path,
-            'type' => $type,
-        ));
         if (!isset($FILES['fileInput']['error']) || is_array($FILES['fileInput']['error'])) {
             $uploadErrors[] = 'Invalid parameters';
         } else if (file_exists($movepath)) {
@@ -39,6 +35,13 @@ class FileController extends BaseController {
         } else if ($FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
             $uploadErrors[] = 'No file selected';
         }
+        $file = new File(array(
+            'name' => $name,
+            'description' => $desc,
+            'size' => $size,
+            'path' => $path,
+            'type' => $type,
+        ));
         $validator = $file->validator();
         if ($validator->validate() && empty($uploadErrors)) {
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $movepath);
