@@ -35,11 +35,10 @@ class File extends BaseModel {
 
     public function validator() {
         $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', array('name', 'path', 'size', 'type'));
-        $v->rule('optional', array('id', 'author'));
+        $v->rule('required', array('name'));
+        $v->rule('optional', array('id', 'size'));
         $v->rule('integer', array('id', 'size'));
         $v->rule('max', 'size', 3000000);
-        $v->rule('lengthMin', array('path', 'type', 'name'), 1);
         return $v;
     }
 
