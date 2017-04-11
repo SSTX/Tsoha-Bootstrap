@@ -23,7 +23,7 @@ class MessageController extends BaseController {
             $message->update();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            View::make('/file/' . $message->relatedFile->id . '/postmessage', array('errors' -> $validator->errors()));
+            View::make('file/viewFile.html', array('errors' => $validator->errors()));
         }
     }
 
