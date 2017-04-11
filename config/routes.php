@@ -56,6 +56,6 @@ $routes->post('/login', function() {
     UserController::loginPost();
 });
 
-$routes->post('/file/:id/postmessage', function($id) {
+$routes->post('/file/:id/', function($id) {
     MessageController::postMessage($id);
 });
