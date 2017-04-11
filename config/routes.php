@@ -57,5 +57,5 @@ $routes->post('/login', function() {
 });
 
 $routes->post('/file/:id/postmessage', function($id) {
-    MessageController::postMessage();
+    MessageController::postMessage($id);
 });
