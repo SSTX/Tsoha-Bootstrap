@@ -96,7 +96,7 @@ class Message extends BaseModel {
 
     public function destroy() {
         $stmt = 'DELETE FROM message WHERE message_id = :id';
-        $query = DB::connections()->prepare($stmt);
+        $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
     }
 }
