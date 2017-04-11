@@ -57,15 +57,17 @@
     </div>
     {% endfor %}
 </div>
-<form class="form-horizontal" action="{{base_path}}/file/{{file.id}}/postmessage">
+<form class="form-horizontal" method="post" action="{{base_path}}/file/{{file.id}}/postmessage">
     <div class="form-group">
-        <label for="subject" class="col-sm-3 control-label">Message subject</label>
-        <input type="text" class="col-sm-9 form-control" name="subject" id="subject" value="{{message.subject}}">
+        <label for="subject" class="col-sm-2">Message subject</label>
+        <input type="text" class="col-sm-10 form-control" name="subject" id="subject" value="{{message.subject}}">
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="body">Message body</label>
-        <textarea class="col-sm-9 form-control" name="body" id="body" rows="5">{{message.body}}</textarea>
+        <label class="col-sm-2" for="body">Message body</label>
+        <textarea class="col-sm-10 form-control" name="body" id="body" rows="5">{{message.body}}</textarea>
     </div>
-    <button class="btn btn-primary">Post message</button>
+    <div class="col-sm-offset-2">
+        <button class="btn btn-primary">Post message</button>
+    </div>
 </form>
 {% endblock %}
