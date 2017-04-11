@@ -42,7 +42,7 @@ class File extends BaseModel {
         return $v;
     }
 
-    public function prettyFilesize() {
+    public function prettySize() {
         $bytes = $this->size;
         $mul = 0;
         while ($bytes >= 1000) {

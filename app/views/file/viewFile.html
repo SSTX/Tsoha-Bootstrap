@@ -10,7 +10,7 @@
             <a href="/{{file.path}}">{{file.name}}</a>
         </div>
     </div>
-    {{dataItem.fileDataItem("Size", "#{file.size}")}}
+    {{dataItem.fileDataItem("Size", "#{file.prettySize()}")}}
     {{dataItem.fileDataItem("Filetype", "#{file.type}")}}
     {{dataItem.fileDataItem("Uploader", "#{file.author.name}")}}
     {{dataItem.fileDataItem("Time submitted", "#{file.submitTime}")}}
