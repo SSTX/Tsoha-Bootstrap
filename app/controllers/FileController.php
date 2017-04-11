@@ -30,7 +30,7 @@ class FileController extends BaseController {
         $size = $_FILES['fileInput']['size'];
         $desc = $_POST['fileDescription'];
         if (!isset($FILES['fileInput']['error']) || is_array($FILES['fileInput']['error'])) {
-            $uploadErrors[] = 'Invalid parameters';
+            //$uploadErrors[] = 'Invalid parameters';
         } else if (file_exists($movepath)) {
             $uploadErrors[] = 'File already exists';
         } else if ($FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
