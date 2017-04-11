@@ -43,7 +43,7 @@
     {% for message in file.messages()%}
 
     <div class="message row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             {{dataItem.messageDataItem("Subject", "#{message.subject}")}}
             {{dataItem.messageDataItem("Author", "#{message.author.name}")}}
             {{dataItem.messageDataItem("Time", "#{message.prettySubmitTime()}")}}
