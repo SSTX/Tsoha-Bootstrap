@@ -41,7 +41,11 @@
                         <!-- Navigaation linkit -->
                         <li><a href="{{base_path}}/filelist">Filelist</a></li>
                         <li><a href="{{base_path}}/upload">Upload a file</a></li>
-                        <li><a href="{{base_path}}/login">Login</a></li>
+                        {% if session.user is defined %}
+                            <li><a href="{{base_path}}/logout">Logout {{session.user.name}}</a></li>
+                        {% else %}
+                            <li><a href="{{base_path}}/login">Login</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
