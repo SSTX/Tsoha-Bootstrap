@@ -57,6 +57,7 @@ class File extends BaseModel {
         } else if ($mul == 2) {
             $unit = 'MB';
         }
+        $bytes = round($bytes, 1);
         return $bytes . ' ' . $unit;
     }
 
