@@ -26,7 +26,7 @@ class MessageController extends BaseController {
             $message->update();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            View::make('file/viewFile.html', array('errors' => $validator->errors()), 'file' => $message->relatedFile);
+            View::make('file/viewFile.html', array('errors' => $validator->errors(), 'file' => $message->relatedFile);
         }
     }
 
