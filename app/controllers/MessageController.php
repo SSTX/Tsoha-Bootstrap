@@ -10,6 +10,9 @@ class MessageController extends BaseController {
         $validator = $message->validator();
         if ($validator->validate()) {
             $message->save();
+            Redirect::to('/file/' . $message->relatedFile->id);
+        } else {
+            View::make('file/viewFile.html', $validator->errors());
         }
     }
 
