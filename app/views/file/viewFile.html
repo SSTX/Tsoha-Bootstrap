@@ -47,7 +47,8 @@
             <strong>{{message.author.name}}</strong>
         </div>
         <div class="col-sm-9">
-            <div><strong>{{message.subject}}</strong>{{message.prettySubmitTime()}}</div>
+            <div class="col-sm-3"><strong>{{message.subject}}</strong></div>
+            <div class="col-sm-9">{{message.prettySubmitTime()}}</div>
             {{message.body}}
         </div>
         <div class="col-sm-1">
