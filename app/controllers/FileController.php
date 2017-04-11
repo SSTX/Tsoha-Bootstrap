@@ -77,7 +77,7 @@ class FileController extends BaseController {
     
     public static function destroyFile($id) {
         $file = File::find($id);
-        unlink(FileController::$baseFilePath . $file->name);
+        unlink(FileController::$basePath . $file->name);
         $file->destroy();
         Redirect::to('/filelist');
     }
