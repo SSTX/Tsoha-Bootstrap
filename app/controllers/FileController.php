@@ -21,12 +21,13 @@ class FileController extends BaseController {
         $uploadErrors = array();
         $name =  basename($_FILES['fileInput']['name']);
         $path = '';
+        $type = '';
         if (!empty($_FILES['fileInput']['tmp_name'])) {
             $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']);
+            $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         }
         $movepath = FileController::$basePath . $path;
         $size = $_FILES['fileInput']['size'];
-        $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         $desc = $_POST['fileDescription'];
         if (!isset($FILES['fileInput']['error']) || is_array($FILES['fileInput']['error'])) {
             $uploadErrors[] = 'Invalid parameters';
