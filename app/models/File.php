@@ -62,7 +62,7 @@ class File extends BaseModel {
     }
 
     public function prettySubmitTime() {
-        return strtotime($this->submitTime);
+        return date('Y-m-d H:i:s', strtotime($this->submitTime));
     }
 
     public static function all() {
