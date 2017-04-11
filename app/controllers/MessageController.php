@@ -30,5 +30,11 @@ class MessageController extends BaseController {
         }
     }
 
+    public static function destroyMessage($id) {
+        $message = Message::find($id);
+        $message->destroy();
+        Redirect::to('/file/' . $message->relatedFile->id);
+    }
+
 }
 

@@ -16,6 +16,11 @@ $routes->get('/file/:id', function($id) {
     FileController::viewFile($id);
 });
 
+// post: new message
+$routes->post('/file/:id/', function($id) {
+    MessageController::postMessage($id);
+});
+
 $routes->post('/upload', function() {
     FileController::uploadPost();
 });
@@ -40,6 +45,10 @@ $routes->get('/message/:id/edit', function($id) {
     HelloWorldController::editMessage($id);
 });
 
+$routes->get('/message/:id/destroy', function($id) {
+    HelloWorldController::editMessage($id);
+});
+
 $routes->get('/search', function() {
     HelloWorldController::searchPage();
 });
@@ -56,6 +65,3 @@ $routes->post('/login', function() {
     UserController::loginPost();
 });
 
-$routes->post('/file/:id/', function($id) {
-    MessageController::postMessage($id);
-});
