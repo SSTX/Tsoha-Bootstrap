@@ -117,16 +117,7 @@ class File extends BaseModel {
     }
 
     public function messages() {
-        $stmt = 'SELECT * FROM message WHERE '
-            .'message_related_file = :id';
-        $query = DB::connection()->prepare($stmt);
-        $query->execute(array('id' => $this->id));
-        $rows = $query->fetchAll();
-        $messages = array();
-        foreach ($rows as $row) {
-            $messages[] = Message::collect($row);
-        }
-        return $messages;
+        return Message::findByFile($this);
     }
 
     public function tags() {

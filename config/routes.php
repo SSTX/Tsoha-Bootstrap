@@ -55,3 +55,7 @@ $routes->get('/login', function() {
 $routes->post('/login', function() {
     UserController::loginPost();
 });
+
+$routes->post('/file/:id/postmessage', function($id) {
+    MessageController::postMessage();
+});

@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% import "macro/fileDataItem.html" as dataItem %}
 {% block content %}
+{%for origin in errors%}
+{%for error in origin%}
+<div class="alert alert-danger">
+    {{error}}
+</div>
+{%endfor%}
+{%endfor%}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
@@ -50,5 +57,14 @@
     </div>
     {% endfor %}
 </div>
-
+<form class="form-horizontal" action="{{base_path}}/file/{{file.id}}/postmessage">
+    <div class="form-control">
+        <label for="subject">Message subject</label>
+        <input type="text" name="subject" id="subject" value="{{message.subject}}">
+    </div>
+    <div class="form-control">
+        <label for="body">Message body</label>
+        <textarea name="body" id="body" rows="5">{{message.body}}</textarea>
+    </div>
+</form>
 {% endblock %}

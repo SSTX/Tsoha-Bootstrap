@@ -30,6 +30,12 @@ class Message extends BaseModel {
         ));
     }
 
+    public function validator() {
+        $v = new Valitron\Validator(get_object_vars($this));
+        $v->rule('required', 'body');
+        return $v;
+    }
+
     public static function all() {
         $stmt = 'SELECT * FROM message';
         $query = DB::connection()->prepare($stmt);
@@ -54,6 +60,19 @@ class Message extends BaseModel {
         return $message;
     }
 
+    public static function findByFile($file) {
+        $stmt = 'SELECT * FROM message WHERE '
+            .'message_related_file = :id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('id' => $file->id));
+        $rows = $query->fetchAll();
+        $messages = array();
+        foreach ($rows as $row) {
+            $messages[] = Message::collect($row);
+        }
+        return $messages;
+    }
+
     public function save() {
         $stmt = 'INSERT INTO message '
             .'(message_author, message_related_file, '
@@ -69,5 +88,11 @@ class Message extends BaseModel {
         ));
         $row = $query->fetch();
         $this->id = $row['message_id'];
+    }
+
+    public function destroy() {
+        $stmt = 'DELETE FROM message WHERE message_id = :id';
+        $query = DB::connections()->prepare($stmt);
+        $query->execute(array('id' => $this->id));
     }
 }
