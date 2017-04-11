@@ -61,9 +61,6 @@ class File extends BaseModel {
         return $bytes . ' ' . $unit;
     }
 
-    public function prettySubmitTime() {
-        return date('Y-m-d H:i:s', strtotime($this->submitTime));
-    }
 
     public static function all() {
         $stmt = 'SELECT * FROM file_metadata';
