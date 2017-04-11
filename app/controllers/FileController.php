@@ -23,15 +23,14 @@ class FileController extends BaseController {
         $path = '';
         $type = '';
         if (!empty($_FILES['fileInput']['tmp_name'])) {
-            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']);
+            $ext = pathinfo($_FILES['fileInput']['name'], PATHINFO_EXTENSION);
+            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . $ext;
             $type = mime_content_type($_FILES['fileInput']['tmp_name']);
         }
         $movepath = FileController::$basePath . $path;
         $size = $_FILES['fileInput']['size'];
         $desc = $_POST['fileDescription'];
-        if (!isset($FILES['fileInput']['error']) || is_array($FILES['fileInput']['error'])) {
-            //$uploadErrors[] = 'Invalid parameters';
-        } else if (file_exists($movepath)) {
+        if (file_exists($movepath)) {
             $uploadErrors[] = 'File already exists';
         } else if ($FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
             $uploadErrors[] = 'No file selected';
@@ -77,7 +76,7 @@ class FileController extends BaseController {
     
     public static function destroyFile($id) {
         $file = File::find($id);
-        unlink(FileController::$basePath . $file->name);
+        unlink(FileController::$basePath . $file->path);
         $file->destroy();
         Redirect::to('/filelist');
     }
