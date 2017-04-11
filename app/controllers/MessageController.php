@@ -4,7 +4,7 @@ class MessageController extends BaseController {
         $params = $_POST;
         $message = new Message(array(
             'body' => $params['body'],
-            'subject' => $params['subject']
+            'subject' => $params['subject'],
             'relatedFile' => File::find($fileId);
         ));
         $validator = $message->validator();
