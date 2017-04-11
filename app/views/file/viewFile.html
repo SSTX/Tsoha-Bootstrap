@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "macro/fileDataItem.html" as dataItem %}
+{% import "macro/dataItem.html" as dataItem %}
 {% block content %}
 {%for origin in errors%}
 {%for error in origin%}
@@ -43,12 +43,12 @@
     {% for message in file.messages()%}
 
     <div class="message row">
-        <div class="col-sm-2">
-            <strong>{{message.author.name}}</strong>
+        <div class="col-sm-4">
+            {{dataItem.messageDataItem("Subject", "#(message.subject)")}}
+            {{dataItem.messageDataItem("Author", "#(message.author.name)")}}
+            {{dataItem.messageDataItem("Time submitted", "#(message.prettySubmitTime())")}}
         </div>
-        <div class="col-sm-9">
-            <div class="col-sm-3"><strong>{{message.subject}}</strong></div>
-            <div class="col-sm-9">{{message.prettySubmitTime()}}</div>
+        <div class="col-sm-8">
             {{message.body}}
         </div>
         <div class="col-sm-1">
