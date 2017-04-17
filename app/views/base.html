@@ -55,6 +55,7 @@
         <div id="main-container">
             <!-- Dynaaminen sisältö tulee tähän -->
             {{errep.errorReport("#{err}")}}
+            {{errep.valitronErrors("#{errors}")}}
             {% block search %}{% endblock %}
             {% block content %}{% endblock %}
             {% block fileInput %}{% endblock %}
