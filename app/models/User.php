@@ -30,6 +30,7 @@ class User extends BaseModel {
         $v = new Valitron\Validator(get_object_vars($this));
         $v->rule('required', 'name');
         $v->rule('required', 'pwHash');
+        return $v;
     }
     
     public static function all() {

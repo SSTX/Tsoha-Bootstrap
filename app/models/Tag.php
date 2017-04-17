@@ -27,6 +27,12 @@ class Tag extends BaseModel {
         ));
     }
 
+    public function validator() {
+        $v = Valitron\Validator(get_object_vars($this));
+        $v->rule('required', array('name', 'description'));
+        return $v;
+    }
+
     public static function all() {
         $stmt = 'SELECT * FROM tag';
         $query = DB::connection()->prepare($stmt);

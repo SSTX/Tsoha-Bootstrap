@@ -48,7 +48,7 @@ class UserController extends BaseController {
         $user = new User(array(
             'name' => $params['username'],
             'pwHash' => crypt($params['password']
-        ));
+        )));
         $validator = $user->validator();
         if ($validator->validate()) {
             $user->save();

@@ -64,3 +64,11 @@ $routes->get('/search', function() {
 $routes->get('/tag/:id', function($id) {
     HelloWorldController::viewTag($id);
 });
+
+$routes->get('/register', function() {
+    UserController::registerGet();
+});
+
+$routes->post('/register', function() {
+    UserController::registerPost();
+});
