@@ -65,7 +65,7 @@ class FileController extends BaseController {
         $params = $_POST;
         $file = File::find($id);
         if ($_SESSION['user'] != $file->author) {
-            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'))
+            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         $file->name = $params['filename'];
         $file->description = $params['description'];
@@ -81,7 +81,7 @@ class FileController extends BaseController {
     public static function destroyFile($id) {
         $file = File::find($id);
         if (self::get_user_logged_in() != $file->author) {
-            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'))
+            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         unlink(FileController::$basePath . $file->path);
         $file->destroy();
