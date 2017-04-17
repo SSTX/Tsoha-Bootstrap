@@ -64,7 +64,7 @@ class FileController extends BaseController {
     public static function editFilePost($id) {
         $params = $_POST;
         $file = File::find($id);
-        if ($_SESSION['user'] != $file->author) {
+        if (self::get_user_logged_in() != $file->author) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         $file->name = $params['filename'];
