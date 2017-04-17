@@ -4,5 +4,6 @@
 
 {%block content%}
 {{errep.errorReport("#{err}")}}
-{{cred.loginForm(user.name)}}
+{{errep.valitronErrors("#{errors}")}}
+{{cred.registerForm()}}
 {%endblock%}

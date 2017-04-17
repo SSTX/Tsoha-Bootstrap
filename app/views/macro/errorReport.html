@@ -1,7 +1,19 @@
 {%macro errorReport(error)%}
-{% if error %}
+{% if error is defined %}
 <div class="alert alert-danger">
     {{error}}
 </div>
+{% endif %}
+{%endmacro%}
+
+{%macro valitronErrors(origins)%}
+{% if origins is defined %}
+{% for origin in origins %}
+{% for error in origin %}
+<div class="alert alert-danger">
+    {{error}}
+</div>
+{% endfor %}
+{% endfor %}
 {% endif %}
 {%endmacro%}

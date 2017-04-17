@@ -14,14 +14,14 @@
 class UserController extends BaseController {
 
     public static function loginGet() {
-        View::Make('user/login.html');
+        View::make('user/login.html');
     }
 
     public static function loginPost() {
         $params = $_POST;
         $user = User::authenticate($params['username'], $params['password']);
         if ($user == NULL) {
-            View::make('user/login.html', array('error' => 'Invalid username or password',
+            View::make('user/login.html', array('err' => 'Invalid username or password',
                 'username' => $params['username']));
         } else {
             $_SESSION['user'] = $user;
@@ -35,5 +35,27 @@ class UserController extends BaseController {
         Redirect::to('/');
     }
     
-    
+    public static function registerGet() {
+        View::make('user/register.html');
+    } 
+
+    public static function registerPost() {
+        $params = $_POST;
+        $user = User::findByName($params['username']);
+        if ($user != null) {
+            Redirect::to('/register', array('err' => 'Username is already taken.'));
+        }
+        $user = new User(array(
+            'name' => $params['username'],
+            'pwHash' => crypt($params['password']
+        ));
+        $validator = $user->validator();
+        if ($validator->validate()) {
+            $user->save();
+            session_unset();
+            self::loginPost();
+        } else {
+            View::make("user/register.html", array('errors' => $validator->errors()));
+        }
+    }
 }

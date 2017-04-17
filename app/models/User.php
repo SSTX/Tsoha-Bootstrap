@@ -26,6 +26,12 @@ class User extends BaseModel {
         ));
     }
     
+    public function validator() {
+        $v = new Valitron\Validator(get_object_vars($this));
+        $v->rule('required', 'name');
+        $v->rule('required', 'pwHash');
+    }
+    
     public static function all() {
         $stmt = 'SELECT * FROM registered_user';
         $query = DB::connection()->prepare($stmt);
@@ -43,6 +49,19 @@ class User extends BaseModel {
                 . 'user_id = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $id));
+        $row = $query->fetch();
+        $user = NULL;
+        if ($row) {
+            $user = User::collect($row);
+        }
+        return $user;
+    }
+
+    public static function findByName($name) {
+        $stmt = 'SELECT * FROM registered_user WHERE '
+                . 'user_name = :name';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('name' => $name));
         $row = $query->fetch();
         $user = NULL;
         if ($row) {
