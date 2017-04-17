@@ -1,9 +1,5 @@
 {%extends "base.html"%}
-{%import "macro/credentials.html" as cred%}
-{%import "macro/errorReport.html" as errep%}
 
 {%block content%}
-{{errep.errorReport("#{err}")}}
-{{errep.valitronErrors("#{errors}")}}
 {{cred.registerForm()}}
 {%endblock%}
