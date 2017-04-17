@@ -29,6 +29,11 @@ class UserController extends BaseController {
         }
         
     }
+
+    public static function logoutPost() {
+        session_unset();
+        Redirect::to('/');
+    }
     
     
 }

@@ -1,9 +1,7 @@
-{%macro errorReport(errors)%}
-{%for origin in errors%}
-{%for error in origin%}
+{%macro errorReport(error)%}
+{% if error %}
 <div class="alert alert-danger">
     {{error}}
 </div>
-{%endfor%}
-{%endfor%}
+{% endif %}
 {%endmacro%}

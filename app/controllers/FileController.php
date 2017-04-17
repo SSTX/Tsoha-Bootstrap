@@ -41,6 +41,7 @@ class FileController extends BaseController {
             'size' => $size,
             'path' => $path,
             'type' => $type,
+            'author' => $_SESSION['user']
         ));
         $validator = $file->validator();
         if ($validator->validate() && empty($uploadErrors)) {
@@ -63,6 +64,9 @@ class FileController extends BaseController {
     public static function editFilePost($id) {
         $params = $_POST;
         $file = File::find($id);
+        if ($_SESSION['user'] != $file->author) {
+            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'))
+        }
         $file->name = $params['filename'];
         $file->description = $params['description'];
         $validator = $file->validator();
@@ -76,6 +80,9 @@ class FileController extends BaseController {
     
     public static function destroyFile($id) {
         $file = File::find($id);
+        if (self::get_user_logged_in() != $file->author) {
+            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'))
+        }
         unlink(FileController::$basePath . $file->path);
         $file->destroy();
         Redirect::to('/filelist');

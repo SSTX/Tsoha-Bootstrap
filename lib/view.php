@@ -32,7 +32,6 @@ class View{
 
         $twig_loader = new Twig_Loader_Filesystem('app/views');
         $env = new Twig_Environment($twig_loader);
-        $env->addGlobal('session', $_SESSION);
         return $env;
     }
 

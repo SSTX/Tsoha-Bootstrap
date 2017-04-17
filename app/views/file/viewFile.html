@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% import "macro/dataItem.html" as dataItem %}
+{% import "macro/errorReport.html" as err %}
+
 {% block content %}
 {%for origin in errors%}
 {%for error in origin%}
@@ -8,6 +10,7 @@
 </div>
 {%endfor%}
 {%endfor%}
+{{err.errorReport("#{err}")}}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
@@ -41,7 +44,6 @@
 <!-- List messages -->
 <div class="messages-container container-fluid">
     {% for message in file.messages()%}
-
     <div class="message row">
         <div class="col-sm-3">
             {{dataItem.messageDataItem("Subject", "#{message.subject}")}}
