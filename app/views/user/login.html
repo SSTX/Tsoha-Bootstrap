@@ -1,6 +1,6 @@
 {%extends "base.html"%}
-{%import "macro/credentials as cred"%}
-{%import "macro/errorReport as errep"%}
+{%import "macro/credentials.html" as cred%}
+{%import "macro/errorReporthtml" as errep%}
 
 {%block content%}
 {{errep.errorReport("#{err}")}}
