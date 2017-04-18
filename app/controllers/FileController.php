@@ -22,6 +22,7 @@ class FileController extends BaseController {
         $name =  basename($_FILES['fileInput']['name']);
         $path = '';
         $type = '';
+        //if there is a file, set metadata based on it
         if (!empty($_FILES['fileInput']['tmp_name'])) {
             $ext = pathinfo($_FILES['fileInput']['name'], PATHINFO_EXTENSION);
             $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . '.' . $ext;
@@ -41,7 +42,7 @@ class FileController extends BaseController {
             'size' => $size,
             'path' => $path,
             'type' => $type,
-            'author' => $_SESSION['user']
+            'author' => self::get_user_logged_in()
         ));
         $validator = $file->validator();
         if ($validator->validate() && empty($uploadErrors)) {

@@ -1,5 +1,5 @@
 {%extends "base.html"%}
-
+{% import "macro/credentials.html" as cred %}
 {%block content%}
 {{cred.loginForm(user.name)}}
 {%endblock%}

@@ -1,6 +1,6 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
-INSERT INTO registered_user (user_name, user_pw_hash) 
-VALUES ('Jalmari', '$2y$10$aYKL9iMH/39neNjVi1eZ2eSCLZ0C3NqX8A9glAmiTd4dQ36e5YRAG');
+INSERT INTO registered_user (user_name, user_pw_hash, user_pw_salt) 
+VALUES ('Jalmari', '0', 'a');
 
 INSERT INTO tag (tag_name, tag_description) 
 VALUES ('test tag', 'this is a tag for testing');

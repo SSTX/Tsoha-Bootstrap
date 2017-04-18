@@ -12,7 +12,7 @@
  * @author ttiira
  */
 class User extends BaseModel {
-    public $id, $name, $pwHash;
+    public $id, $name, $pwHash, $pwSalt;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -22,7 +22,8 @@ class User extends BaseModel {
         return new User(array(
             'id' => $row['user_id'],
             'name' => $row['user_name'],
-            'pwHash' => $row['user_pw_hash']
+            'pwHash' => $row['user_pw_hash'],
+            'pwSalt' => $row['user_pw_salt']
         ));
     }
     
@@ -72,28 +73,31 @@ class User extends BaseModel {
     }
     
     public function save() {
-        $stmt = 'INSERT INTO registered_user (user_name, user_pw_hash) '
-                . 'VALUES (:name, :pwHash) '
+        $stmt = 'INSERT INTO registered_user (user_name, user_pw_hash, user_pw_salt) '
+                . 'VALUES (:name, :pwHash, :pwSalt) '
                 . 'RETURNING user_id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array(
             'name' => $this->name,
-            'pwHash' => $this->pwHash));
+            'pwHash' => $this->pwHash,
+            'pwSalt' => $this->pwSalt));
         $row = $query->fetch();
         $this->id = $row['user_id'];
     }
     
     public static function authenticate($username, $password) {
-        $hash = crypt($password);
         $stmt = 'SELECT * FROM registered_user '
-            . 'WHERE user_name = :name '
-            . 'AND user_pw_hash = :hash';
+            . 'WHERE user_name = :name';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('name' => $username, 'hash' => $hash));
+        $query->execute(array('name' => $username));
         $row = $query->fetch();
         if ($row) {
             $user = User::collect($row);
-            return $user;
+            $hash = crypt($password, $user->pwSalt);
+            if ($hash != $user->pwHash) {
+                return null;
+            }
+            return $user->id;
         }
         return NULL;
     }

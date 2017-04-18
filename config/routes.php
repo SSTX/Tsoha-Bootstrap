@@ -72,3 +72,7 @@ $routes->get('/register', function() {
 $routes->post('/register', function() {
     UserController::registerPost();
 });
+
+$routes->get('/logout', function() {
+    UserController::logoutGet();
+});

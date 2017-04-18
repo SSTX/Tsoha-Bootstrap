@@ -1,3 +1,19 @@
+{% macro success(msg) %}
+{% if msg %}
+<div class="alert alert-success">
+    {{msg}}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro info(msg) %}
+{% if msg %}
+<div class="alert alert-info">
+    {{msg}}
+</div>
+{% endif %}
+{% endmacro %}
+
 {% macro errorReport(error) %}
 {% if error %}
 <div class="alert alert-danger">

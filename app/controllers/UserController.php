@@ -19,43 +19,46 @@ class UserController extends BaseController {
 
     public static function loginPost() {
         $params = $_POST;
-        $user = User::authenticate($params['username'], $params['password']);
-        if ($user == NULL) {
+        $userid = User::authenticate($params['username'], $params['password']);
+        if ($userid == NULL) {
             View::make('user/login.html', array('err' => 'Invalid username or password',
                 'username' => $params['username']));
         } else {
-            $_SESSION['user'] = $user;
-            Redirect::to('/');
+            $_SESSION['userid'] = $userid;
+            $user = User::find($userid);
+            Redirect::to('/', array('successMsg' => 'Logged in as ' . $user->name));
         }
-        
     }
 
-    public static function logoutPost() {
+    public static function logoutGet() {
+        $user = self::get_user_logged_in();
         session_unset();
-        Redirect::to('/');
+        Redirect::to('/', array('infoMsg' => 'Logged out ' . $user->name));
     }
-    
+
     public static function registerGet() {
         View::make('user/register.html');
-    } 
+    }
 
     public static function registerPost() {
         $params = $_POST;
-        $user = User::findByName($params['username']);
-        if ($user != null) {
+        $found = User::findByName($params['username']);
+        if ($found != null) {
             Redirect::to('/register', array('err' => 'Username is already taken.'));
         }
+        //$2a$10$ selects blowfish ($2a$) with 2^10 iterations ($10$)
+        $salt = '$2a$10$' . bin2hex(openssl_random_pseudo_bytes(16));
         $user = new User(array(
             'name' => $params['username'],
-            'pwHash' => crypt($params['password']
-        )));
+            'pwHash' => crypt($params['password'], $salt),
+            'pwSalt' => $salt));
         $validator = $user->validator();
         if ($validator->validate()) {
             $user->save();
-            session_unset();
             self::loginPost();
         } else {
             View::make("user/register.html", array('errors' => $validator->errors()));
         }
     }
+
 }

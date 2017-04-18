@@ -3,8 +3,8 @@
 class BaseController{
 
     public static function get_user_logged_in(){
-        if(isset($_SESSION['user'])) {
-            $user = User::find($_SESSION['user']);
+        if(isset($_SESSION['userid'])) {
+            $user = User::find($_SESSION['userid']);
             return $user;
         }
         return null;

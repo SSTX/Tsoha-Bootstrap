@@ -93,7 +93,7 @@ class File extends BaseModel {
                 . 'VALUES (:author, :name, :desc, now(), :path, :size, :type) '
                 . 'RETURNING file_id';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('author' => $this->author,
+        $query->execute(array('author' => $this->author->id,
             'name' => $this->name,
             'desc' => $this->description,
             'path' => $this->path,

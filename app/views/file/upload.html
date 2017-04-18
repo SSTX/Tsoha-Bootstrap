@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Upload a file</h2>
-{%for origin in errors%}
-{%for error in origin%}
-<div class="alert alert-danger">
-    {{error}}
-</div>
-{%endfor%}
-{%endfor%}
+<div class="alert alert-info">Maximum filesize is currently 3 MB</div>
 <form class="form-horizontal" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
