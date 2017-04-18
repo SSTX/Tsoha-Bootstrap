@@ -73,6 +73,11 @@ class File extends BaseModel {
         }
         return $files;
     }
+    
+    public static function search($params) {
+        $stmt = 'SELECT * FROM file_metadata WHERE '
+                . '';
+    }
 
     public static function find($id) {
         $stmt = 'SELECT * FROM file_metadata WHERE file_id = :id';
@@ -93,7 +98,11 @@ class File extends BaseModel {
                 . 'VALUES (:author, :name, :desc, now(), :path, :size, :type) '
                 . 'RETURNING file_id';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('author' => $this->author->id,
+        $uploader = null;
+        if ($this->author) {
+            $uploader = $this->author->id;
+        }
+        $query->execute(array('author' => $uploader,
             'name' => $this->name,
             'desc' => $this->description,
             'path' => $this->path,
@@ -105,12 +114,7 @@ class File extends BaseModel {
     }
 
     public function messageCount() {
-        $stmt = 'SELECT COUNT(*) AS message_count FROM message WHERE '
-                . 'message_related_file = :fileId';
-        $query = DB::connection()->prepare($stmt);
-        $query->execute(array('fileId' => $this->id));
-        $row = $query->fetch();
-        return $row['message_count'];
+        return Message::messageCount($this);
     }
 
     public function messages() {
@@ -118,17 +122,7 @@ class File extends BaseModel {
     }
 
     public function tags() {
-        $stmt = 'SELECT tag.* FROM tag,tagged_file,file_metadata WHERE '
-            .'tagged_file.tagged_file = file_metadata.file_id '
-            .'AND tagged_file.tag = tag.tag_id '
-            .'AND file_metadata.file_id = :id';
-        $query = DB::connection()->prepare($stmt);
-        $query->execute(array('id' => $this->id));
-        $rows = $query->fetchAll();
-        $tags = array();
-        foreach($rows as $row) {
-            $tags[] = Tag::collect($row);
-        }
+        $tags = Tag::linkedTags($this);
         return $tags;
     }
 

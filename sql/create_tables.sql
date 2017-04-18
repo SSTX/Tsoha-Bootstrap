@@ -11,7 +11,7 @@ CREATE TABLE registered_user
 CREATE TABLE file_metadata 
 (
     file_id SERIAL PRIMARY KEY,
-    file_author INTEGER REFERENCES registered_user(user_id),
+    file_author INTEGER REFERENCES registered_user(user_id) ON DELETE SET NULL,
     file_name text,
     file_description text,
     file_submit_time timestamp with time zone,
@@ -23,8 +23,8 @@ CREATE TABLE file_metadata
 CREATE TABLE message 
 (
     message_id SERIAL PRIMARY KEY, 
-    message_author INTEGER REFERENCES registered_user(user_id), 
-    message_related_file INTEGER REFERENCES file_metadata(file_id), 
+    message_author INTEGER REFERENCES registered_user(user_id) ON DELETE CASCADE, 
+    message_related_file INTEGER REFERENCES file_metadata(file_id) ON DELETE CASCADE, 
     message_subject text, 
     message_body text, 
     message_submit_time timestamp with time zone
@@ -39,6 +39,6 @@ CREATE TABLE tag
 
 CREATE TABLE tagged_file 
 (
-    tagged_file INTEGER REFERENCES file_metadata(file_id),
-    tag INTEGER REFERENCES tag(tag_id)
+    tagged_file INTEGER REFERENCES file_metadata(file_id) ON DELETE CASCADE,
+    tag INTEGER REFERENCES tag(tag_id) ON DELETE CASCADE
 );

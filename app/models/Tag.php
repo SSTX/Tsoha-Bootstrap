@@ -29,7 +29,7 @@ class Tag extends BaseModel {
 
     public function validator() {
         $v = Valitron\Validator(get_object_vars($this));
-        $v->rule('required', array('name', 'description'));
+        $v->rule('required', 'name');
         return $v;
     }
 
@@ -57,6 +57,42 @@ class Tag extends BaseModel {
         return $tag;
     }
 
+    public static function findByName($name) {
+        $stmt = 'SELECT * FROM tag WHERE tag_name = :name';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('name' => $name));
+        $row = $query->fetch();
+        if ($row) {
+            return Tag::collect($row);
+        }
+        return null;
+    }
+    
+    public static function linkedTags(File $file) {
+        $stmt = 'SELECT Tag.* FROM file_metadata,tag,tagged_file '
+                . 'WHERE tagged_file.tagged_file = file_metadata.file_id '
+                . 'AND tagged_file.tag = tag.tag_id '
+                . 'AND file_metadata.file_id = :fileid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('fileid' => $file->id));
+        $rows = $query->fetchAll();
+        $tags = array();
+        foreach ($rows as $row) {
+            $tags[] = Tag::collect($row);
+        }
+        return $tags;
+    }
+    
+    public static function makeLink(File $file, Tag $tag) {
+        $stmt = 'INSERT INTO tagged_file (tagged_file, tag) '
+                . 'VALUES (:fileid, :tagid)';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array(
+            'fileid' => $file->id, 
+            'tagid' => $tag->id));
+        
+    }
+    
     public function save() {
         $stmt = 'INSERT INTO tag (tag_name, tag_description) '
             .'VALUES (:name, :desc) '
@@ -67,7 +103,7 @@ class Tag extends BaseModel {
             'desc' => $this->description,
         ));
         $row = $query->fetch();
-        $this->id = $row['file_id'];
+        $this->id = $row['tag_id'];
     }
 
 }

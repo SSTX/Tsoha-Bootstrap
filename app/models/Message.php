@@ -62,7 +62,7 @@ class Message extends BaseModel {
 
     public static function findByFile($file) {
         $stmt = 'SELECT * FROM message WHERE '
-            .'message_related_file = :id';
+                . 'message_related_file = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $file->id));
         $rows = $query->fetchAll();
@@ -73,12 +73,21 @@ class Message extends BaseModel {
         return $messages;
     }
 
+    public static function messageCount(File $file) {
+        $stmt = 'SELECT COUNT(*) AS message_count FROM message WHERE '
+                . 'message_related_file = :fileId';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('fileId' => $file->id));
+        $row = $query->fetch();
+        return $row['message_count'];
+    }
+
     public function save() {
         $stmt = 'INSERT INTO message '
-            .'(message_author, message_related_file, '
-            .'message_subject, message_body, message_submit_time) '
-            .'VALUES (:authorId, :fileId, :subject, :body, now()) '
-            .'RETURNING message_id';
+                . '(message_author, message_related_file, '
+                . 'message_subject, message_body, message_submit_time) '
+                . 'VALUES (:authorId, :fileId, :subject, :body, now()) '
+                . 'RETURNING message_id';
         $query = DB::connection()->prepare($stmt);
         $params = array(
             'fileId' => $this->relatedFile->id,
@@ -99,4 +108,5 @@ class Message extends BaseModel {
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
     }
+
 }
