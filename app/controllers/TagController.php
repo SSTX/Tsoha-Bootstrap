@@ -12,14 +12,14 @@
  * @author ttiira
  */
 class TagController {
-    
+
     public static function linkTags(File $file, $rawTagString) {
         $tags = self::createTags($rawTagString);
         foreach ($tags as $tag) {
             Tag::makeLink($file, $tag);
         }
     }
-    
+
     private static function createTags($rawTagString) {
         $tagnames = explode(' ', $rawTagString);
         $tags = array();
@@ -33,22 +33,31 @@ class TagController {
         }
         return $tags;
     }
-    
+
     public static function newTagGet() {
         View::make('tag/newTag.html');
     }
-    
+
     public static function newTagPost() {
         
     }
-    
+
     public static function editTagGet() {
         View::make('tag/editTag.html');
     }
-    
+
     public static function editTagPost() {
         
     }
-    
-    
+
+    public static function tagList() {
+        $tags = Tag::all();
+        View::make('tag/taglist.html', array('tags' => $tags));
+    }
+
+    public static function viewTag($id) {
+        $tag = Tag::find($id);
+        View::make('suunnitelmat/viewTag.html', array('tag' => $tag));
+    }
+
 }

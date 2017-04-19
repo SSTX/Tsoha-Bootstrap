@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Upload a file</h2>
-<div class="alert alert-info">Maximum filesize is currently 3 MB</div>
+{{msg.info("Maximum filesize is currently 3 MB")}}
+{{msg.info("Required fields are marked by *")}}
 <form class="form-horizontal" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
-        <label for="fileInput" class="col-sm-2 control-label">File</label>
+        <label for="fileInput" class="col-sm-2 control-label">File*</label>
         <div class="col-sm-10">
             <input id="fileInput" name="fileInput" type="file">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tags" class="col-sm-2">Name Override</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="nameOverride" id="nameOverride" placeholder="Default: filename on your filesystem.">
         </div>
     </div>
     <div class="form-group">

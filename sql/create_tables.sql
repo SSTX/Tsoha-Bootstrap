@@ -2,7 +2,7 @@
 CREATE TABLE registered_user 
 (
     user_id SERIAL PRIMARY KEY,
-    user_name varchar(50), 
+    user_name text, 
     user_pw_hash text, 
     user_pw_salt text
 );

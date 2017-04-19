@@ -19,6 +19,9 @@ class MessageController extends BaseController {
     public static function editMessage($id) {
         $params = $_POST;
         $message = Message::find($id);
+        if (self::get_user_logged_in() != $message->author) {
+            Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
+        }
         $message->subject = $params['subject'];
         $message->body = $params['body'];
         $validator = $message->validator();
@@ -32,6 +35,9 @@ class MessageController extends BaseController {
 
     public static function destroyMessage($id) {
         $message = Message::find($id);
+        if (self::get_user_logged_in() != $message->author) {
+            Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
+        }
         $message->destroy();
         Redirect::to('/file/' . $message->relatedFile->id);
     }

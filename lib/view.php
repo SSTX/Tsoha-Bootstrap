@@ -31,7 +31,8 @@ class View{
         Twig_Autoloader::register();
 
         $twig_loader = new Twig_Loader_Filesystem('app/views');
-        $env = new Twig_Environment($twig_loader);
+        $env = new Twig_Environment($twig_loader, array('debug' => true));
+        $env->addExtension(new Twig_Extension_Debug());
         return $env;
     }
 

@@ -30,7 +30,9 @@ class User extends BaseModel {
     public function validator() {
         $v = new Valitron\Validator(get_object_vars($this));
         $v->rule('required', 'name');
+        $v->rule('lengthMax', 'name', 30);
         $v->rule('required', 'pwHash');
+        $v->labels(array('name' => 'User name', 'pwHash' => 'Password'));
         return $v;
     }
     

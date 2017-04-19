@@ -23,13 +23,10 @@
 {% endmacro %}
 
 {% macro valitronErrors(origins) %}
-{% if origins %}
-{% for origin in origins %}
-{% for error in origin %}
+<pre>{{dump(origins)}}</pre>
+{% for val in origins.size %}
 <div class="alert alert-danger">
-    {{error}}
+{{val}}
 </div>
 {% endfor %}
-{% endfor %}
-{% endif %}
 {% endmacro %}

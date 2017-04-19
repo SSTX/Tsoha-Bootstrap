@@ -32,8 +32,14 @@ class UserController extends BaseController {
 
     public static function logoutGet() {
         $user = self::get_user_logged_in();
+        $name;
+        if ($user == null) {
+            $name = '';
+        } else {
+            $name = ' ' . $user->name;
+        }
         session_unset();
-        Redirect::to('/', array('infoMsg' => 'Logged out ' . $user->name));
+        Redirect::to('/', array('infoMsg' => 'Logged out' . $name . '.'));
     }
 
     public static function registerGet() {
@@ -45,6 +51,9 @@ class UserController extends BaseController {
         $found = User::findByName($params['username']);
         if ($found != null) {
             Redirect::to('/register', array('err' => 'Username is already taken.'));
+        }
+        if ($_POST['password'] != $_POST['passwordRepeat']) {
+            Redirect::to('/register', array('err' => 'Passwords don\'t match.'));
         }
         //$2a$10$ selects blowfish ($2a$) with 2^10 iterations ($10$)
         $salt = '$2a$10$' . bin2hex(openssl_random_pseudo_bytes(16));

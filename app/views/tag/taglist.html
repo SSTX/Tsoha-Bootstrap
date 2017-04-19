@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for tag in tags %}
+<ol><a href="{{base_path}}/tag/{{tag.id}}">{{tag.name}}</a></ol>
+{% endfor %}
+{% endblock %}

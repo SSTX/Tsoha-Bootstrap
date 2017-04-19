@@ -1,12 +1,9 @@
 <?php
 
 $routes->get('/', function() {
-    HelloWorldController::index();
+    MiscController::index();
 });
 
-$routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-});
 
 $routes->get('/filelist', function() {
     FileController::filelist();
@@ -57,13 +54,6 @@ $routes->post('/login', function() {
     UserController::loginPost();
 });
 
-$routes->get('/search', function() {
-    HelloWorldController::searchPage();
-});
-
-$routes->get('/tag/:id', function($id) {
-    HelloWorldController::viewTag($id);
-});
 
 $routes->get('/register', function() {
     UserController::registerGet();
@@ -75,4 +65,12 @@ $routes->post('/register', function() {
 
 $routes->get('/logout', function() {
     UserController::logoutGet();
+});
+
+$routes->get('/taglist', function() {
+    TagController::tagList();
+});
+
+$routes->get('/tag/:id', function($id) {
+    TagController::viewTag($id);
 });

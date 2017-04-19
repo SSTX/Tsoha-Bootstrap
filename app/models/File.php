@@ -13,7 +13,7 @@
  */
 class File extends BaseModel {
 
-    public $id, $author, $name, $description, $submitTime, $path, $size, $type;
+    public $id, $author, $name, $description, $submitTime, $path, $size, $type, $hash;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -33,17 +33,25 @@ class File extends BaseModel {
         ));
     }
 
+    public static function maxSize() {
+        return 3000000;
+    }
+    
     public function validator() {
         $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', array('name'));
+        $v->rule('required', 'name')->message('{field} must be non-empty.')->label('File name');
         $v->rule('optional', array('id', 'size'));
         $v->rule('integer', array('id', 'size'));
-        $v->rule('max', 'size', 3000000);
+        $v->rule('max', 'size', self::maxSize())->message('{field} must be no more than ' . self::sizeConvert(self::maxSize()). '.');
+        $v->labels(array('size' => 'File size'));
         return $v;
     }
 
     public function prettySize() {
-        $bytes = $this->size;
+        return self::sizeConvert($this->size);
+    }
+
+    private static function sizeConvert($bytes) {
         $mul = 0;
         while ($bytes >= 1000) {
             $bytes = $bytes / 1000;
@@ -60,7 +68,6 @@ class File extends BaseModel {
         $bytes = round($bytes, 1);
         return $bytes . ' ' . $unit;
     }
-
 
     public static function all() {
         $stmt = 'SELECT * FROM file_metadata';

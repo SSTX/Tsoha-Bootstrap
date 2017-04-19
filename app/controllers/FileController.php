@@ -21,6 +21,9 @@ class FileController extends BaseController {
     public static function uploadPost() {
         $uploadError = null;
         $name = basename($_FILES['fileInput']['name']);
+        if (!empty($_POST['nameOverride'])) {
+            $name = $_POST['nameOverride'];
+        }
         $size = $_FILES['fileInput']['size'];
         $desc = $_POST['fileDescription'];
         $path = '';
@@ -47,7 +50,6 @@ class FileController extends BaseController {
             'author' => self::get_user_logged_in()
         ));
         $validator = $file->validator();
-         Kint::dump($validator);
         if ($validator->validate() && !$uploadError) {
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
             chmod($finalPath, 0744);
@@ -55,12 +57,15 @@ class FileController extends BaseController {
             TagController::linkTags($file, $_POST['tags']); //this must be after file->save for file to have id
             Redirect::to('/file/' . $file->id, array('success' => 'File uploaded successfully.'));
         } else {
-            Redirect::to('/upload', array('file' => $file, 'errors' => $validator->errors(), 'err' => $uploadError));
+            Redirect::to('/upload', array('file' => $file, 'tags' => $_POST['tags'], 'errors' => $validator->errors(), 'err' => $uploadError));
         }
     }
 
     public static function editFileGet($id) {
         $file = File::find($id);
+        if (self::get_user_logged_in() != $file->author) {
+            Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
+        }
         View::make('file/editFile.html', array('file' => $file));
     }
 
