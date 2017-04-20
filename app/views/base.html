@@ -1,4 +1,5 @@
 {%import "macro/message.html" as msg%}
+{% import "macro/dataItem.html" as dataItem %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,6 +43,7 @@
                         <!-- Navigaation linkit -->
                         <li><a href="{{base_path}}/filelist">Filelist</a></li>
                         <li><a href="{{base_path}}/upload">Upload a file</a></li>
+                        <li><a href="{{base_path}}/search">Search files</a></li>
                         {% if user_logged_in %}
                         <li><a href="{{base_path}}/logout">Logout <strong>{{user_logged_in.name}}</strong></a></li>
                         {% else %}
@@ -56,7 +58,9 @@
         <div id="main-container">
             <!-- Dynaaminen sisältö tulee tähän -->
             {{msg.errorReport("#{err}")}}
-            {{msg.valitronErrors("#{errors}")}}
+            {% for errmsg in errors %}
+            <div class="alert alert-danger">{{errmsg}}</div>
+            {% endfor %}
             {{msg.success("#{successMsg}")}}
             {{msg.info("#{infoMsg}")}}
             {% block content %}{% endblock %}

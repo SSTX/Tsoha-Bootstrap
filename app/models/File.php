@@ -36,22 +36,12 @@ class File extends BaseModel {
     public static function maxSize() {
         return 3000000;
     }
-    
-    public function validator() {
-        $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', 'name')->message('{field} must be non-empty.')->label('File name');
-        $v->rule('optional', array('id', 'size'));
-        $v->rule('integer', array('id', 'size'));
-        $v->rule('max', 'size', self::maxSize())->message('{field} must be no more than ' . self::sizeConvert(self::maxSize()). '.');
-        $v->labels(array('size' => 'File size'));
-        return $v;
-    }
 
     public function prettySize() {
         return self::sizeConvert($this->size);
     }
 
-    private static function sizeConvert($bytes) {
+    public static function sizeConvert($bytes) {
         $mul = 0;
         while ($bytes >= 1000) {
             $bytes = $bytes / 1000;
@@ -82,8 +72,15 @@ class File extends BaseModel {
     }
     
     public static function search($params) {
-        $stmt = 'SELECT * FROM file_metadata WHERE '
-                . '';
+        $stmt = 'SELECT * FROM file_metadata WHERE file_name LIKE :name';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('name' => $params['name']));
+        $rows = $query->fetchAll();
+        $files = array();
+        foreach ($rows as $row) {
+            $files[] = File::collect($row);
+        }
+        return $files;
     }
 
     public static function find($id) {

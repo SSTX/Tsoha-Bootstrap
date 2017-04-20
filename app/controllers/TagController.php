@@ -57,7 +57,7 @@ class TagController {
 
     public static function viewTag($id) {
         $tag = Tag::find($id);
-        View::make('suunnitelmat/viewTag.html', array('tag' => $tag));
+        View::make('tag/viewTag.html', array('tag' => $tag));
     }
 
 }

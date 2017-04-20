@@ -19,3 +19,9 @@
     </div>
 </div>
 {% endmacro %}
+
+{% macro listTags(tags) %}
+{% for tag in tags%}
+{{tag.name}} 
+{%endfor%}
+{% endmacro %}

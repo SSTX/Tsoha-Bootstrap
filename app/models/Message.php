@@ -19,6 +19,7 @@ class Message extends BaseModel {
         parent::__construct($attributes);
     }
 
+
     public static function collect($row) {
         return new Message(array(
             'id' => $row['message_id'],
@@ -28,12 +29,6 @@ class Message extends BaseModel {
             'body' => $row['message_body'],
             'submitTime' => $row['message_submit_time']
         ));
-    }
-
-    public function validator() {
-        $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', 'body');
-        return $v;
     }
 
     public static function all() {

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<form class="form-inline">
+<form class="form-inline" method="post">
     <div class="form-group">
         <label for="search" class="sr-only">Search</label>
-        <input class="form-control col-sm-8" name="search" id="search" placeholder="Search for filename or #tag" type="text">
+        <input class="form-control col-sm-8" name="search" id="search" placeholder="Search for filename" type="text">
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
 </form>

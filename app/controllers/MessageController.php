@@ -1,18 +1,30 @@
 <?php
+
 class MessageController extends BaseController {
+
+    public static function messageValidator($messageData) {
+        $validator = new Valitron\Validator($messageData);
+        $validator->rule('required', 'body')->label('Message body');
+        return $validator;
+    }
+
     public static function postMessage($fileId) {
         $params = $_POST;
-        $message = new Message(array(
+        $messageData = array(
             'body' => $params['body'],
             'subject' => $params['subject'],
             'relatedFile' => File::find($fileId)
-        ));
-        $validator = $message->validator();
+        );
+        $validator = self::messageValidator($messageData);
         if ($validator->validate()) {
+            $message = new Message($messageData);
             $message->save();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            View::make('file/viewFile.html', array('errors' => $validator->errors(), 'file' => $message->relatedFile));
+            $errors = self::array_flatten($validator->errors());
+            View::make('file/viewFile.html', array(
+                'errors' => $errors, 
+                'file' => $message->relatedFile));
         }
     }
 
@@ -22,14 +34,21 @@ class MessageController extends BaseController {
         if (self::get_user_logged_in() != $message->author) {
             Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
         }
-        $message->subject = $params['subject'];
-        $message->body = $params['body'];
-        $validator = $message->validator();
+        $messageData = array(
+            'subject' => $params['subject'],
+            'body' => $params['body']
+        );
+        $validator = self::messageValidator($messageData);
         if ($validator()->validate()) {
+            $message->subject = $params['subject'];
+            $message->body = $params['body'];
             $message->update();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            View::make('file/viewFile.html', array('errors' => $validator->errors(), 'file' => $message->relatedFile));
+            $errors = self::array_flatten($validator->errors());
+            View::make('file/viewFile.html', array(
+                'errors' => $errors,
+                'file' => $message->relatedFile));
         }
     }
 
@@ -43,4 +62,3 @@ class MessageController extends BaseController {
     }
 
 }
-

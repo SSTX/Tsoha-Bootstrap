@@ -57,7 +57,7 @@ The user deletes a message from the server. The message must be originally poste
 \paragraph{Log out}
 The user logs out from the server and becomes and unauthenticated user.
 
-\section{System data content}
+\section{Data content}
 \subsection{Class diagram}
 \includegraphics[scale=0.7]{diagrams/class.png}
 \subsection{Class attribute details}
@@ -108,7 +108,13 @@ The application adheres to the MVC model. Source code is mostly located in the "
 \includegraphics[scale=0.7]{diagrams/pageflow.png}
 
 \section{Instructions for use}
+\subsection{Uploading files}
+\subsubsection{Uploader identification}
+Uploaded files will be linked to your account if you are logged in at the time you upload the file. Otherwise files will be uploaded anonymously.
+\subsubsection{Tags}
+Any tags entered when uploading a file will be linked to that file. If some of the tags don't exist, they will be created.
 
-
+\subsection{Editing files and messages}
+Editing functions can be accessed from the respective page of the file you want to edit. You must be logged in as the original uploader/poster to edit files/messages. Anonymously uploaded files and messages are not editable.
 \section{}
 \end{document}

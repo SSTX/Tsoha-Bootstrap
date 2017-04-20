@@ -4,6 +4,9 @@ $routes->get('/', function() {
     MiscController::index();
 });
 
+$routes->get('/search', function() {
+    MiscController::searchPage();
+});
 
 $routes->get('/filelist', function() {
     FileController::filelist();
@@ -13,6 +16,9 @@ $routes->get('/file/:id', function($id) {
     FileController::viewFile($id);
 });
 
+$routes->post('/search', function() {
+    FileController::searchFilesPost();
+});
 // post: new message
 $routes->post('/file/:id/', function($id) {
     MessageController::postMessage($id);

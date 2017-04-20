@@ -1,8 +1,16 @@
 <?php
-
 class FileController extends BaseController {
 
     public static $basePath = '/home/ttiira/htdocs/';
+
+    public static function fileValidator($fileData) {
+        $validator = new Valitron\Validator($fileData);
+        $validator->rule('required', 'name')->label('File name');
+        $validator->rule('max', 'size', File::maxSize())
+                ->message('{field} must be no more than ' . File::sizeConvert(File::maxSize()))
+                ->label('File size');
+        return $validator;
+    }
 
     public static function filelist() {
         $files = File::all();
@@ -19,45 +27,32 @@ class FileController extends BaseController {
     }
 
     public static function uploadPost() {
-        $uploadError = null;
-        $name = basename($_FILES['fileInput']['name']);
-        if (!empty($_POST['nameOverride'])) {
-            $name = $_POST['nameOverride'];
-        }
-        $size = $_FILES['fileInput']['size'];
-        $desc = $_POST['fileDescription'];
-        $path = '';
-        $type = '';
-        //if there is a file, set metadata based on it
+        $fileData = array();
         if (!empty($_FILES['fileInput']['tmp_name'])) {
+            if (empty($_POST['nameOverride'])) {
+                $fileData['name'] = basename($_FILES['fileInput']['name']);
+            } else {
+                $fileData['name'] = $_POST['nameOverride'];
+            }
             $ext = pathinfo($_FILES['fileInput']['name'], PATHINFO_EXTENSION);
-            $path = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . '.' . $ext;
-            $type = mime_content_type($_FILES['fileInput']['tmp_name']);
+            $fileData['path'] = 'files/' . md5_file($_FILES['fileInput']['tmp_name']) . '.' . $ext;
+            $fileData['type'] = mime_content_type($_FILES['fileInput']['tmp_name']);
+            $fileData['size'] = $_FILES['fileInput']['size'];
+            $fileData['description'] = $_POST['fileDescription'];
+            $fileData['author'] = self::get_user_logged_in();
         }
-        $finalPath = FileController::$basePath . $path;
-
-        if (file_exists($finalPath)) {
-            $uploadError = 'File already exists';
-        } else if ($_FILES['fileInput']['error'] == UPLOAD_ERR_NO_FILE) {
-            $uploadError = 'No file selected';
-        }
-        $file = new File(array(
-            'name' => $name,
-            'description' => $desc,
-            'size' => $size,
-            'path' => $path,
-            'type' => $type,
-            'author' => self::get_user_logged_in()
-        ));
-        $validator = $file->validator();
-        if ($validator->validate() && !$uploadError) {
+        $validator = self::fileValidator($fileData);
+        $file = new File($fileData);
+        if ($validator->validate()) {
+            $finalPath = FileController::$basePath . $fileData['path'];
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
             chmod($finalPath, 0744);
             $file->save();
             TagController::linkTags($file, $_POST['tags']); //this must be after file->save for file to have id
             Redirect::to('/file/' . $file->id, array('success' => 'File uploaded successfully.'));
         } else {
-            Redirect::to('/upload', array('file' => $file, 'tags' => $_POST['tags'], 'errors' => $validator->errors(), 'err' => $uploadError));
+            $errors = self::array_flatten($validator->errors());
+            Redirect::to('/upload', array('file' => $file, 'tags' => $_POST['tags'], 'errors' => $errors));
         }
     }
 
@@ -66,7 +61,9 @@ class FileController extends BaseController {
         if (self::get_user_logged_in() != $file->author) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
-        View::make('file/editFile.html', array('file' => $file));
+        View::make('file/editFile.html', array(
+            'file' => $file,
+            'tags' => Tag::linkedTags($file)));
     }
 
     public static function editFilePost($id) {
@@ -75,14 +72,21 @@ class FileController extends BaseController {
         if (self::get_user_logged_in() != $file->author) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
-        $file->name = $params['filename'];
-        $file->description = $params['description'];
-        $validator = $file->validator();
+        $fileData = array(
+            'name' => $params['filename'],
+            'description' => $params['description']);
+        $validator = self::fileValidator($fileData);
         if ($validator->validate()) {
+            $file->name = $params['filename'];
+            $file->description = $params['description'];
             $file->update();
             Redirect::to('/file/' . $file->id);
         } else {
-            View::make('file/editFile.html', array('file' => $file, 'errors' => $validator->errors()));
+            $errors = self::array_flatten($validator->errors());
+            View::make('file/editFile.html', array(
+                'file' => $file, 
+                'errors' => $errors,
+                'tags' => Tag::linkedTags($file)));
         }
     }
 
@@ -97,7 +101,11 @@ class FileController extends BaseController {
     }
 
     public static function searchFilesPost() {
-        $terms = explode(' ', $_POST['search']);
-        
+        $terms = array(
+            'name' => $_POST['search']
+        );
+        $files = File::search($terms);
+        Redirect::to('/filelist', array('files' => $files));
     }
+
 }
