@@ -105,6 +105,8 @@ class FileController extends BaseController {
             'name' => $_POST['search']
         );
         $files = File::search($terms);
+        Kint::dump($files);
+        exit();
         Redirect::to('/filelist', array('files' => $files));
     }
 
