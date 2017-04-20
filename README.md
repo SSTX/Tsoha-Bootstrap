@@ -1,10 +1,9 @@
 # Tietokantasovelluksen esittelysivu
 
-Yleisiä linkkejä:
 
-* [Linkki sovellukseen](https://ttiira.users.cs.helsinki.fi/tsoha)
-* [Dokumentaatio](doc/dokumentaatio.pdf)
+* [Application home page](https://ttiira.users.cs.helsinki.fi/tsoha)
+* [Documentation](doc/documentation.pdf)
 
-# Testitunnukset
-* Käyttäjänimi: Jalmari
-* Salasana: asd
+# Test account
+* Username: 4423
+* Password: coil
