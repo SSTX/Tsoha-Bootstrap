@@ -13,7 +13,7 @@
  */
 class File extends BaseModel {
 
-    public $id, $author, $name, $description, $submitTime, $path, $size, $type, $hash;
+    public $id, $author, $name, $description, $submitTime, $path, $size, $type;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -72,7 +72,7 @@ class File extends BaseModel {
     }
     
     public static function search($params) {
-        $stmt = 'SELECT * FROM file_metadata WHERE file_name LIKE :name';
+        $stmt = 'SELECT * FROM file_metadata WHERE file_name = :name';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('name' => $params['name']));
         $rows = $query->fetchAll();
