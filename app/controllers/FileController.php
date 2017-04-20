@@ -9,6 +9,9 @@ class FileController extends BaseController {
         $validator->rule('max', 'size', File::maxSize())
                 ->message('{field} must be no more than ' . File::sizeConvert(File::maxSize()))
                 ->label('File size');
+        $validator->rule(function($field, $value, $params, $fields) {
+            return !file_exists($value);
+        }, 'finalPath')->message('File already exists');
         return $validator;
     }
 
@@ -41,10 +44,11 @@ class FileController extends BaseController {
             $fileData['description'] = $_POST['fileDescription'];
             $fileData['author'] = self::get_user_logged_in();
         }
+        $finalPath = FileController::$basePath . $fileData['path'];
+        $fileData['finalPath'] = $finalPath;
         $validator = self::fileValidator($fileData);
         $file = new File($fileData);
         if ($validator->validate()) {
-            $finalPath = FileController::$basePath . $fileData['path'];
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
             chmod($finalPath, 0744);
             $file->save();
