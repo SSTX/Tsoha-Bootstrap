@@ -10,8 +10,9 @@ class BaseController {
         return null;
     }
 
-    public static function logged_in(User $userToCheck) {
-        return self::get_user_logged_in() == $userToCheck;
+    public static function logged_in($userToCheck) {
+        $user = self::get_user_logged_in();
+        return $user != null && $user == $userToCheck;
     }
 
     public static function array_flatten($array) {
