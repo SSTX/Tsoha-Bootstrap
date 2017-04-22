@@ -16,8 +16,8 @@ class MessageController extends BaseController {
             'relatedFile' => File::find($fileId)
         );
         $validator = self::messageValidator($messageData);
+        $message = new Message($messageData);
         if ($validator->validate()) {
-            $message = new Message($messageData);
             $message->save();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
