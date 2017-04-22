@@ -11,6 +11,7 @@ class MessageController extends BaseController {
     public static function postMessage($fileId) {
         $params = $_POST;
         $messageData = array(
+            'author' => self::get_user_logged_in(),
             'body' => $params['body'],
             'subject' => $params['subject'],
             'relatedFile' => File::find($fileId)
@@ -31,7 +32,7 @@ class MessageController extends BaseController {
     public static function editMessage($id) {
         $params = $_POST;
         $message = Message::find($id);
-        if (self::get_user_logged_in() != $message->author) {
+        if (!self::logged_in($message->author)) {
             Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
         }
         $messageData = array(
@@ -54,7 +55,7 @@ class MessageController extends BaseController {
 
     public static function destroyMessage($id) {
         $message = Message::find($id);
-        if (self::get_user_logged_in() != $message->author) {
+        if (!self::logged_in($message->author)) {
             Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
         }
         $message->destroy();

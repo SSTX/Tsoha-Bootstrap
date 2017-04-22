@@ -10,9 +10,8 @@ class BaseController {
         return null;
     }
 
-    public static function check_logged_in() {
-        // Toteuta kirjautumisen tarkistus tähän.
-        // Jos käyttäjä ei ole kirjautunut sisään, ohjaa hänet toiselle sivulle (esim. kirjautumissivulle).
+    public static function logged_in(User $userToCheck) {
+        return self::get_user_logged_in() == $userToCheck;
     }
 
     public static function array_flatten($array) {

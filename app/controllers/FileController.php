@@ -62,7 +62,7 @@ class FileController extends BaseController {
 
     public static function editFileGet($id) {
         $file = File::find($id);
-        if (self::get_user_logged_in() != $file->author) {
+        if (!self::logged_in($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         View::make('file/editFile.html', array(
@@ -73,7 +73,7 @@ class FileController extends BaseController {
     public static function editFilePost($id) {
         $params = $_POST;
         $file = File::find($id);
-        if (self::get_user_logged_in() != $file->author) {
+        if (!self::logged_in($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         $fileData = array(
@@ -96,7 +96,7 @@ class FileController extends BaseController {
 
     public static function destroyFile($id) {
         $file = File::find($id);
-        if (self::get_user_logged_in() != $file->author) {
+        if (!self::logged_in($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         unlink(FileController::$basePath . $file->path);
