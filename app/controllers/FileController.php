@@ -1,4 +1,5 @@
 <?php
+
 class FileController extends BaseController {
 
     public static $basePath = '/home/ttiira/htdocs/';
@@ -16,7 +17,18 @@ class FileController extends BaseController {
     }
 
     public static function filelist() {
-        $files = File::all();
+        $terms = array();
+        if (!empty($_GET['filename'])) {
+            $terms['filename'] = $_GET['filename'];
+        }
+        if (!empty($_GET['tags'])) {
+            $terms['tags'] = explode(' ', $_GET['tags']);
+        }
+        if (!empty($_GET['filetype'])) {
+            $terms['filetype'] = $_GET['filetype'];
+        }
+        
+        $files = File::search(null);
         View::make('file/filelist.html', array('files' => $files));
     }
 
@@ -55,7 +67,7 @@ class FileController extends BaseController {
             TagController::linkTags($file, $_POST['tags']); //this must be after file->save for file to have id
             Redirect::to('/file/' . $file->id, array('success' => 'File uploaded successfully.'));
         } else {
-            $errors = self::array_flatten($validator->errors());
+            $errors = helperFunctions::array_flatten($validator->errors());
             Redirect::to('/upload', array('file' => $file, 'tags' => $_POST['tags'], 'errors' => $errors));
         }
     }
@@ -86,9 +98,9 @@ class FileController extends BaseController {
             $file->update();
             Redirect::to('/file/' . $file->id);
         } else {
-            $errors = self::array_flatten($validator->errors());
+            $errors = helperFunctions::array_flatten($validator->errors());
             View::make('file/editFile.html', array(
-                'file' => $file, 
+                'file' => $file,
                 'errors' => $errors,
                 'tags' => Tag::linkedTags($file)));
         }
@@ -102,14 +114,6 @@ class FileController extends BaseController {
         unlink(FileController::$basePath . $file->path);
         $file->destroy();
         Redirect::to('/filelist');
-    }
-
-    public static function searchFilesPost() {
-        $terms = array(
-            'name' => $_POST['search']
-        );
-        $files = File::search($terms);
-        Redirect::to('/filelist', array('files' => $files));
     }
 
 }

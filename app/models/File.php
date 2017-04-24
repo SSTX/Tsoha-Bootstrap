@@ -70,11 +70,11 @@ class File extends BaseModel {
         }
         return $files;
     }
-    
+
     public static function search($params) {
-        $stmt = 'SELECT * FROM file_metadata WHERE file_name = :name';
+        $stmt = 'SELECT * FROM file_metadata';
         $query = DB::connection()->prepare($stmt);
-        $query->execute(array('name' => $params['name']));
+        $query->execute();
         $rows = $query->fetchAll();
         $files = array();
         foreach ($rows as $row) {
@@ -140,11 +140,12 @@ class File extends BaseModel {
             'name' => $this->name,
             'desc' => $this->description));
     }
-    
+
     public function destroy() {
         $stmt = 'DELETE FROM file_metadata '
                 . 'WHERE file_id = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
     }
+
 }

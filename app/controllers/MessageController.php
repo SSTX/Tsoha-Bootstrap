@@ -22,7 +22,7 @@ class MessageController extends BaseController {
             $message->save();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            $errors = self::array_flatten($validator->errors());
+            $errors = helperFunctions::array_flatten($validator->errors());
             View::make('file/viewFile.html', array(
                 'errors' => $errors, 
                 'file' => $message->relatedFile));
@@ -46,7 +46,7 @@ class MessageController extends BaseController {
             $message->update();
             Redirect::to('/file/' . $message->relatedFile->id);
         } else {
-            $errors = self::array_flatten($validator->errors());
+            $errors = helperFunctions::array_flatten($validator->errors());
             View::make('file/viewFile.html', array(
                 'errors' => $errors,
                 'file' => $message->relatedFile));
