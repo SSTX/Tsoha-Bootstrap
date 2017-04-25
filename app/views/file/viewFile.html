@@ -21,7 +21,7 @@
         <div class="col-sm-9">
             <ul class="list-inline">
                 {% for tag in file.tags() %}
-                <li> <a href="{{base_path}}/tag/{{tag.id}}">{{tag.name}}</a> </li>
+                <li> <a href="{{base_path}}/filelist?tags={{tag.name}}">{{tag.name}}</a> </li>
                 {% endfor %}
             </ul>
         </div>

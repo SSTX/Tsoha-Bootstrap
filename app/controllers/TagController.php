@@ -12,9 +12,13 @@
  * @author ttiira
  */
 class TagController {
+    
 
-    public static function linkTags(File $file, $rawTagString) {
+    public static function updateTags(File $file, $rawTagString) {
         $tags = self::createTags($rawTagString);
+        foreach ($file->tags() as $tag) {
+            Tag::destroyLink($file, $tag);
+        }
         foreach ($tags as $tag) {
             Tag::makeLink($file, $tag);
         }

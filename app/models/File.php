@@ -72,15 +72,60 @@ class File extends BaseModel {
     }
 
     public static function search($params) {
-        $stmt = 'SELECT * FROM file_metadata';
-        $query = DB::connection()->prepare($stmt);
-        $query->execute();
+        // helper search functions return an array with indexes:
+        // 'stmt' => sql statement formatted for PDO
+        // 'params' => parameters to send to PDO matching the statement
+        $namestmt = self::nameSearch($params['name']);
+        $typestmt = self::typeSearch($params['type']);
+        $stmt = helperFunctions::sqlMerge($namestmt, $typestmt);
+        $idx = 0;
+        foreach ($params['tags'] as $tag) {
+            $stmt = helperFunctions::sqlMerge($stmt, self::tagSearch($tag, $idx));
+            $idx += 1;
+        }
+        if (empty($stmt)) {
+            $stmt = array('stmt' => 'SELECT * FROM file_metadata', 'params' => array());
+        }
+        $query = DB::connection()->prepare($stmt['stmt']);
+        $query->execute($stmt['params']);
         $rows = $query->fetchAll();
         $files = array();
         foreach ($rows as $row) {
             $files[] = File::collect($row);
         }
         return $files;
+    }
+
+    private static function nameSearch($name) {
+        if (empty($name)) {
+            return null;
+        }
+        $name = helperFunctions::sqlReplaceWildcards($name);
+        $stmt = 'SELECT file_metadata.* FROM file_metadata WHERE '
+                . 'LOWER(file_name) LIKE :name';
+        return array('stmt' => $stmt, 'params' => array('name' => $name));
+    }
+
+    private static function tagSearch($tag, $idx) {
+        if (empty($tag)) {
+            return null;
+        }
+        $tag = helperFunctions::sqlReplaceWildcards($tag);
+        $stmt = 'SELECT file_metadata.* FROM file_metadata,tagged_file,tag WHERE '
+                . 'file_metadata.file_id = tagged_file.tagged_file '
+                . 'AND tag.tag_id = tagged_file.tag '
+                . 'AND LOWER(tag.tag_name) LIKE :t' . $idx;
+        return array('stmt' => $stmt, 'params' => array('t' . $idx => $tag));
+    }
+
+    private static function typeSearch($type) {
+        if (empty($type)) {
+            return null;
+        }
+        $type = helperFunctions::sqlReplaceWildcards($type);
+        $stmt = 'SELECT file_metadata.* FROM file_metadata WHERE '
+                . 'LOWER(file_metadata.file_type) LIKE :type';
+        return array('stmt' => $stmt, 'params' => array('type' => $type));
     }
 
     public static function find($id) {

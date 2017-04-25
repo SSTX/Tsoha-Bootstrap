@@ -18,17 +18,20 @@ class FileController extends BaseController {
 
     public static function filelist() {
         $terms = array();
+        $terms['name'] = null;
+        $terms['type'] = null;
+        $terms['tags'] = array();
         if (!empty($_GET['filename'])) {
-            $terms['filename'] = $_GET['filename'];
+            $terms['name'] = $_GET['filename'];
         }
         if (!empty($_GET['tags'])) {
             $terms['tags'] = explode(' ', $_GET['tags']);
         }
         if (!empty($_GET['filetype'])) {
-            $terms['filetype'] = $_GET['filetype'];
+            $terms['type'] = $_GET['filetype'];
         }
         
-        $files = File::search(null);
+        $files = File::search($terms);
         View::make('file/filelist.html', array('files' => $files));
     }
 
@@ -64,7 +67,7 @@ class FileController extends BaseController {
             move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
             chmod($finalPath, 0744);
             $file->save();
-            TagController::linkTags($file, $_POST['tags']); //this must be after file->save for file to have id
+            TagController::updateTags($file, $_POST['tags']); //this must be after file->save for file to have id
             Redirect::to('/file/' . $file->id, array('success' => 'File uploaded successfully.'));
         } else {
             $errors = helperFunctions::array_flatten($validator->errors());
@@ -96,6 +99,7 @@ class FileController extends BaseController {
             $file->name = $params['filename'];
             $file->description = $params['description'];
             $file->update();
+            TagController::updateTags($file, $_POST['tags']);
             Redirect::to('/file/' . $file->id);
         } else {
             $errors = helperFunctions::array_flatten($validator->errors());

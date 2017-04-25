@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{{msg.info("Search is case-insensitive. Files must match all filled fields.")}}
+{{msg.info("Wildcards * are supported.")}}
 <form class="form-horizontal" method="get" action="{{base_path}}/filelist">
     <div class="form-group">
         <label for="filename" class="col-sm-2">File name</label>
-        <div class="col-sm10">
+        <div class="col-sm-10">
             <input class="form-control" name="filename" id="filename" placeholder="File name" type="text">
         </div>
     </div>

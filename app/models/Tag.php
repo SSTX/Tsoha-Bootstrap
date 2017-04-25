@@ -90,7 +90,17 @@ class Tag extends BaseModel {
         $query->execute(array(
             'fileid' => $file->id, 
             'tagid' => $tag->id));
-        
+    }
+    
+    public static function destroyLink(File $file, Tag $tag) {
+        $stmt = 'DELETE FROM tagged_file WHERE '
+                . 'tagged_file.tagged_file = :fileid '
+                . 'AND tagged_file.tag = :tagid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array(
+            'fileid' => $file->id,
+            'tagid' => $tag->id
+        ));
     }
     
     public function save() {

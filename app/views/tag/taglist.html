@@ -2,6 +2,6 @@
 
 {% block content %}
 {% for tag in tags %}
-<ol><a href="{{base_path}}/tag/{{tag.id}}">{{tag.name}}</a></ol>
+<ol><a href="{{base_path}}/filelist?tags={{tag.name}}">{{tag.name}}</a></ol>
 {% endfor %}
 {% endblock %}
