@@ -10,11 +10,8 @@ class BaseController {
         return null;
     }
 
-    public static function logged_in($userToCheck) {
+    public static function checkOwnership($owner) {
         $user = self::get_user_logged_in();
-        return $user != null && $user == $userToCheck;
+        return $user != null && ($user->isAdmin || $user == $owner);
     }
-
-
-
 }

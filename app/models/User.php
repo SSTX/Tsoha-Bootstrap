@@ -12,7 +12,7 @@
  * @author ttiira
  */
 class User extends BaseModel {
-    public $id, $name, $pwHash, $pwSalt;
+    public $id, $name, $pwHash, $pwSalt, $registerTime, $isAdmin;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -23,17 +23,10 @@ class User extends BaseModel {
             'id' => $row['user_id'],
             'name' => $row['user_name'],
             'pwHash' => $row['user_pw_hash'],
-            'pwSalt' => $row['user_pw_salt']
+            'pwSalt' => $row['user_pw_salt'],
+            'registerTime' => $row['user_register_time'],
+            'isAdmin' => $row['user_is_admin']
         ));
-    }
-    
-    public function validator() {
-        $v = new Valitron\Validator(get_object_vars($this));
-        $v->rule('required', 'name');
-        $v->rule('lengthMax', 'name', 30);
-        $v->rule('required', 'pwHash');
-        $v->labels(array('name' => 'User name', 'pwHash' => 'Password'));
-        return $v;
     }
     
     public static function all() {
@@ -102,5 +95,13 @@ class User extends BaseModel {
             return $user->id;
         }
         return NULL;
+    }
+    
+    public function messageCount() {
+        return Message::userMessageCount($this);
+    }
+    
+    public function fileCount() {
+        return File::userFileCount($this);
     }
 }

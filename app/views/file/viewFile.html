@@ -12,7 +12,14 @@
     </div>
     {{dataItem.fileDataItem("Size", "#{file.prettySize()}")}}
     {{dataItem.fileDataItem("Filetype", "#{file.type}")}}
-    {{dataItem.fileDataItem("Uploader", "#{file.author.name}")}}
+    <div class="row">
+        <div class="col-sm-3">
+            <strong>Author</strong>
+        </div>
+        <div class="col-sm-9">
+            <a href="{{base_path}}/user/{{file.author.id}}">{{file.author.name}}</a>
+        </div>
+    </div>
     {{dataItem.fileDataItem("Time submitted", "#{file.prettySubmitTime()}")}}
     <div class="row">
         <div class="col-sm-3">

@@ -68,11 +68,23 @@ class Message extends BaseModel {
         return $messages;
     }
 
-    public static function messageCount(File $file) {
+    public static function fileMessageCount(File $file) {
         $stmt = 'SELECT COUNT(*) AS message_count FROM message WHERE '
                 . 'message_related_file = :fileId';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('fileId' => $file->id));
+        $row = $query->fetch();
+        return $row['message_count'];
+    }
+    
+    public static function userMessageCount(User $user) {
+        $stmt = 'SELECT COUNT (*) AS message_count '
+                . 'FROM registered_user,file_metadata,message '
+                . 'WHERE file_metadata.file_id = message.related_file '
+                . 'AND registered_user.user_id = file_metadata.file_author '
+                . 'AND registered_user.user_id = :userid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('userid' => $user->id));
         $row = $query->fetch();
         return $row['message_count'];
     }

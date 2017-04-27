@@ -4,14 +4,16 @@ CREATE TABLE registered_user
     user_id SERIAL PRIMARY KEY,
     user_name text, 
     user_pw_hash text, 
-    user_pw_salt text
+    user_pw_salt text,
+    user_register_time timestamp with time zone,
+    user_is_admin boolean DEFAULT FALSE
 );
 
 
 CREATE TABLE file_metadata 
 (
     file_id SERIAL PRIMARY KEY,
-    file_author INTEGER REFERENCES registered_user(user_id) ON DELETE SET NULL,
+    file_author INTEGER REFERENCES registered_user(user_id) ON DELETE CASCADE,
     file_name text,
     file_description text,
     file_submit_time timestamp with time zone,

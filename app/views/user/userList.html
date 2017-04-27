@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>User name</th>
+            <th>Number of files uploaded</th>
+            <th>Number of messages posted</th>
+            <th>Date registered</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td><a href="{{base_path}}/file/{{user.id}}">{{user.name}}</a></td>
+            <td>{{user.fileCount()}}</td>
+            <td>{{user.messageCount()}}</td>
+            <td>{{user.registerTime}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

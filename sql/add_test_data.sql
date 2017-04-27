@@ -1,6 +1,6 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
-INSERT INTO registered_user (user_name, user_pw_hash, user_pw_salt) 
-VALUES ('4423', '$2a$10$13340b662369ee3121811usNixBJY9erHXiaNx4jtgT87ctYqDuZ.', '$2a$10$13340b662369ee312181142dbfd9f144');
+INSERT INTO registered_user (user_name, user_pw_hash, user_pw_salt, user_register_time) 
+VALUES ('4423', '$2a$10$13340b662369ee3121811usNixBJY9erHXiaNx4jtgT87ctYqDuZ.', '$2a$10$13340b662369ee312181142dbfd9f144', current_timestamp);
 
 INSERT INTO tag (tag_name, tag_description) 
 VALUES ('test tag', 'this is a tag for testing');

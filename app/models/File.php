@@ -34,7 +34,7 @@ class File extends BaseModel {
     }
 
     public static function maxSize() {
-        return 3000000;
+        return 5000000;
     }
 
     public function prettySize() {
@@ -83,6 +83,7 @@ class File extends BaseModel {
             $stmt = helperFunctions::sqlMerge($stmt, self::tagSearch($tag, $idx));
             $idx += 1;
         }
+        $stmt = helperFunctions::sqlMerge($stmt, self::uploaderSearch($params['uploader']));
         if (empty($stmt)) {
             $stmt = array('stmt' => 'SELECT * FROM file_metadata', 'params' => array());
         }
@@ -128,6 +129,17 @@ class File extends BaseModel {
         return array('stmt' => $stmt, 'params' => array('type' => $type));
     }
 
+    private static function uploaderSearch($uploader) {
+        if (empty($uploader)) {
+            return null;
+        }
+        $uploader = helperFunctions::sqlReplaceWildcards($uploader);
+        $stmt = 'SELECT file_metadata.* FROM file_metadata,registered_user '
+                . 'WHERE file_metadata.file_author = registered_user.user_id '
+                . 'AND registered_user.user_name LIKE :uploader';
+        return array('stmt' => $stmt, 'params' => array('uploader' => $uploader));
+    }
+    
     public static function find($id) {
         $stmt = 'SELECT * FROM file_metadata WHERE file_id = :id';
         $query = DB::connection()->prepare($stmt);
@@ -163,7 +175,7 @@ class File extends BaseModel {
     }
 
     public function messageCount() {
-        return Message::messageCount($this);
+        return Message::fileMessageCount($this);
     }
 
     public function messages() {
@@ -193,4 +205,14 @@ class File extends BaseModel {
         $query->execute(array('id' => $this->id));
     }
 
+    public static function userFileCount(User $user) {
+        $stmt = 'SELECT COUNT(*) AS message_count '
+                . 'FROM registered_user,file_metadata '
+                . 'WHERE registered_user.user_id = file_metadata.file_author '
+                . 'AND registered_user.user_id = :userid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('userid' => $user->id));
+        $row = $query->fetch();
+        return $row['message_count'];
+    }
 }

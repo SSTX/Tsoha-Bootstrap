@@ -32,7 +32,7 @@ class MessageController extends BaseController {
     public static function editMessage($id) {
         $params = $_POST;
         $message = Message::find($id);
-        if (!self::logged_in($message->author)) {
+        if (!self::checkOwnership($message->author)) {
             Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
         }
         $messageData = array(
@@ -55,7 +55,7 @@ class MessageController extends BaseController {
 
     public static function destroyMessage($id) {
         $message = Message::find($id);
-        if (!self::logged_in($message->author)) {
+        if (!self::checkOwnership($message->author)) {
             Redirect::to('/file/' . $message->relatedFile->id, array('err' => 'Login as the user who posted the message to edit it.'));
         }
         $message->destroy();

@@ -77,3 +77,11 @@ $routes->get('/taglist', function() {
 $routes->get('/tag/:id', function($id) {
     TagController::viewTag($id);
 });
+
+$routes->get('/user/:id', function($id) {
+    UserController::userProfile($id);
+});
+
+$routes->get('/userlist', function() {
+    UserController::userlist();
+});

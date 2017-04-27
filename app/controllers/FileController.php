@@ -21,6 +21,7 @@ class FileController extends BaseController {
         $terms['name'] = null;
         $terms['type'] = null;
         $terms['tags'] = array();
+        $terms['uploader'] = null;
         if (!empty($_GET['filename'])) {
             $terms['name'] = $_GET['filename'];
         }
@@ -30,7 +31,9 @@ class FileController extends BaseController {
         if (!empty($_GET['filetype'])) {
             $terms['type'] = $_GET['filetype'];
         }
-        
+        if (!empty($_GET['uploader'])) {
+            $terms['uploader'] = $_GET['uploader'];
+        }
         $files = File::search($terms);
         View::make('file/filelist.html', array('files' => $files));
     }
@@ -58,9 +61,9 @@ class FileController extends BaseController {
             $fileData['size'] = $_FILES['fileInput']['size'];
             $fileData['description'] = $_POST['fileDescription'];
             $fileData['author'] = self::get_user_logged_in();
+            $finalPath = FileController::$basePath . $fileData['path'];
+            $fileData['finalPath'] = $finalPath;
         }
-        $finalPath = FileController::$basePath . $fileData['path'];
-        $fileData['finalPath'] = $finalPath;
         $validator = self::fileValidator($fileData);
         $file = new File($fileData);
         if ($validator->validate()) {
@@ -77,7 +80,7 @@ class FileController extends BaseController {
 
     public static function editFileGet($id) {
         $file = File::find($id);
-        if (!self::logged_in($file->author)) {
+        if (!self::checkOwnership($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         View::make('file/editFile.html', array(
@@ -88,7 +91,7 @@ class FileController extends BaseController {
     public static function editFilePost($id) {
         $params = $_POST;
         $file = File::find($id);
-        if (!self::logged_in($file->author)) {
+        if (!self::checkOwnership($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         $fileData = array(
@@ -112,7 +115,7 @@ class FileController extends BaseController {
 
     public static function destroyFile($id) {
         $file = File::find($id);
-        if (!self::logged_in($file->author)) {
+        if (!self::checkOwnership($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
         unlink(FileController::$basePath . $file->path);
