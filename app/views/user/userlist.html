@@ -5,15 +5,15 @@
     <thead>
         <tr>
             <th>User name</th>
-            <th>Number of files uploaded</th>
-            <th>Number of messages posted</th>
+            <th>Files uploaded</th>
+            <th>Messages posted</th>
             <th>Date registered</th>
         </tr>
     </thead>
     <tbody>
         {% for user in users %}
         <tr>
-            <td><a href="{{base_path}}/file/{{user.id}}">{{user.name}}</a></td>
+            <td><a href="{{base_path}}/user/{{user.id}}">{{user.name}}</a></td>
             <td>{{user.fileCount()}}</td>
             <td>{{user.messageCount()}}</td>
             <td>{{user.registerTime}}</td>

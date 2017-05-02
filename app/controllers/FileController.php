@@ -44,10 +44,16 @@ class FileController extends BaseController {
     }
 
     public static function uploadGet() {
+        if (self::get_user_logged_in() == null) {
+            Redirect::to('/', array('err' => 'Please login to upload files.'));
+        }
         View::make('file/upload.html');
     }
 
     public static function uploadPost() {
+        if (self::get_user_logged_in() == null) {
+            Redirect::to('/', array('err' => 'Please log in to upload files.'));
+        }
         $fileData = array();
         if (!empty($_FILES['fileInput']['tmp_name'])) {
             if (empty($_POST['nameOverride'])) {

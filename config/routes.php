@@ -41,8 +41,12 @@ $routes->get('/file/:id/destroy', function($id) {
     FileController::destroyFile($id);
 });
 
-$routes->get('/message/:id/edit', function($id) {
+$routes->post('/message/:id/edit', function($id) {
     MessageController::editMessage($id);
+});
+
+$routes->get('/message/:id/edit', function($id) {
+    MessageController::editPage($id);
 });
 
 $routes->get('/message/:id/destroy', function($id) {

@@ -16,7 +16,7 @@ class UserController extends BaseController {
     private static function userValidator($userData) {
         $v = new Valitron\Validator($userData);
         $v->rule('required', 'name');
-        $v->rule('lengthMax', 'name', 30)->message('{field} must no longer than {field1}');
+        $v->rule('lengthMax', 'name', 30)->message('{field} must be no longer than 30');
         $v->rule('required', 'password');
         $v->rule('equals', 'password', 'passwordRepeat')->message('Passwords don\'t match');
         $v->rule('equals', 'existingUser', null)->message('User already exists');
@@ -63,7 +63,7 @@ class UserController extends BaseController {
 
 
         $userData = array(
-            'name' => $params['username'],
+            'name' => trim($params['username']),
             'password' => $params['password'],
             'passwordRepeat' => $params['passwordRepeat'],
             'existingUser' => $existingUser
@@ -79,12 +79,14 @@ class UserController extends BaseController {
             $user->save();
             self::loginPost();
         } else {
-            View::make("user/register.html", array('errors' => $validator->errors()));
+            $errors = helperFunctions::array_flatten($validator->errors());
+            View::make("user/register.html", array('errors' => $errors));
         }
     }
 
     public static function userlist() {
-        View::make('user/userlist.html');
+        $users = User::all();
+        View::make('user/userlist.html', array('users' => $users));
     }
     
     public static function userProfile($id) {

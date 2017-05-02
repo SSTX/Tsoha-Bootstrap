@@ -31,18 +31,6 @@ class Message extends BaseModel {
         ));
     }
 
-    public static function all() {
-        $stmt = 'SELECT * FROM message';
-        $query = DB::connection()->prepare($stmt);
-        $query->execute();
-        $rows = $query->fetchAll();
-        $messages = array();
-        foreach ($rows as $row) {
-            $messages[] = Message::collect($row);
-        }
-        return $messages;
-    }
-
     public static function find($id) {
         $stmt = 'SELECT * FROM message WHERE message_id = :id';
         $query = DB::connection()->prepare($stmt);
@@ -57,7 +45,8 @@ class Message extends BaseModel {
 
     public static function findByFile($file) {
         $stmt = 'SELECT * FROM message WHERE '
-                . 'message_related_file = :id';
+                . 'message_related_file = :id '
+                . 'ORDER BY message_submit_time ASC';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $file->id));
         $rows = $query->fetchAll();
@@ -80,7 +69,7 @@ class Message extends BaseModel {
     public static function userMessageCount(User $user) {
         $stmt = 'SELECT COUNT (*) AS message_count '
                 . 'FROM registered_user,file_metadata,message '
-                . 'WHERE file_metadata.file_id = message.related_file '
+                . 'WHERE file_metadata.file_id = message.message_related_file '
                 . 'AND registered_user.user_id = file_metadata.file_author '
                 . 'AND registered_user.user_id = :userid';
         $query = DB::connection()->prepare($stmt);
@@ -114,6 +103,19 @@ class Message extends BaseModel {
         $stmt = 'DELETE FROM message WHERE message_id = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
+    }
+    
+    public function update() {
+        $stmt = 'UPDATE message '
+                . 'SET message_subject = :subject, '
+                . 'message_body = :body '
+                . 'WHERE message_id = :id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array(
+            'subject' => $this->subject,
+            'body' => $this->body,
+            'id' => $this->id
+        ));
     }
 
 }

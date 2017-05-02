@@ -34,11 +34,14 @@
         </div>
     </div>
     {{dataItem.fileDataItem("Description", "#{file.description}")}}
+    {% if user_logged_in.id == file.author.id %}
     <a href="{{base_path}}/file/{{file.id}}/edit" class="btn btn-default">Edit</a>
     <a href="{{base_path}}/file/{{file.id}}/destroy" class="btn btn-danger">Delete</a>
+    {% endif %}
 </div>
 
 <!-- List messages -->
+<h2>Messages</h2>
 <div class="messages-container container-fluid">
     {% for message in file.messages()%}
     <div class="message row">
@@ -47,18 +50,23 @@
             {{dataItem.messageDataItem("Author", "#{message.author.name}")}}
             {{dataItem.messageDataItem("Time", "#{message.prettySubmitTime()}")}}
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8 message-body">
             {{message.body}}
         </div>
+        {% if user_logged_in.id == message.author.id %}
         <div class="col-sm-1">
             <a href="{{base_path}}/message/{{message.id}}/edit" class="btn btn-default">Edit</a>
-            <a href="{{base_path}}/message/{{message.id}}/destroy" class="btn btn-danger">Delete</a>
+            
         </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>
 
+
 <!-- Post message form -->
+{% if user_logged_in %}
+<h2>Post a message</h2>
 <div class="container-fluid">
     <form class="form-horizontal" method="post">
         <div class="form-group">
@@ -78,4 +86,5 @@
         </div>
     </form>
 </div>
+{% endif %}
 {% endblock %}

@@ -10,7 +10,7 @@
 \newcolumntype{R}{>{\raggedright\arraybackslash}X}
 \section{Introduction}
 \subsection{Project description}
-This project is a web application that enables users to upload files to the server. Users can view the uploaded files and post comments on them. Files can be searched using attached tags in addition to file names. Users can register an account on the server which allows them to control their uploaded files and messages. Registration is not mandatory.
+This project is a web application that enables users to upload files to the server and post comments on them. Uploaded files and messages are available for anyone to view. Uploading and posting messages requires an user account. Registered users can later edit or delete their uploaded files and messages.
 
 \subsection{Implementation environment}
 The application is implemented in PHP and runs on the University of Helsinki users-server. It uses a PostgreSQL database and Bootstrap css.
@@ -31,11 +31,6 @@ Unauthenticated users can do the following:
 The user lists either all files on the server, or some subset of them by using the search function.
 \paragraph{Inspect file / browse messages}
 The user selects one file and is shown detailed information about it, in addition to any comments posted on that file.
-\paragraph{Upload file}
-The user uploads a file to the server.
-\paragraph{Post message}
-The user posts a message related to some file on the server.
-
 \paragraph{Register}
 The user creates an account on the service.
 \paragraph{Log in}
@@ -44,16 +39,18 @@ The user logs in to an existing account on the server.
 
 \subsubsection{Authenticated user}
 Authenticated users can do everything unauthenticated users can. In addition authenticated users can do the following:
+\paragraph{Upload file}
+The user uploads a file to the server.
+\paragraph{Post message}
+The user posts a message related to some file on the server.
 \paragraph{Edit file}
 The user edits some of the metadata related to a file. It is possible to edit the file's name, description and tags. Other metadata or the file itself are not editable. The file must be originally uploaded by the user trying to edit it.
 \paragraph{Delete file}
 The user deletes a from the server. All messages related to the file are also deleted. The file must be originally uploaded by the user trying to delete it.
-
 \paragraph{Edit message}
 The user edits a message. The message must be originally posted by the user trying to edit it.
 \paragraph{Delete message}
 The user deletes a message from the server. The message must be originally posted by the user trying to delete it.
-
 \paragraph{Log out}
 The user logs out from the server and becomes and unauthenticated user.
 
@@ -86,7 +83,6 @@ File type & String & The MIME type of the file, for example text/plain.\\ \hline
 \begin{tabularx}{\textwidth}{|R|R|R|} \hline
 \textbf{Attribute} & \textbf{Type} & \textbf{Description}\\ \hline
 Tag name & String & The name of the tag.\\ \hline
-Tag description & String & Additional information and context relating to the tag.\\ \hline
 \end{tabularx}
 
 \subsubsection{Message}
@@ -111,10 +107,12 @@ The application adheres to the MVC model. Source code is mostly located in the "
 \section{Instructions for use}
 \subsection{Uploading files}
 \subsubsection{Uploader identification}
-Uploaded files will be linked to your account if you are logged in at the time you upload the file. Otherwise files will be uploaded anonymously.
+Uploaded files will be linked to your account. 
 \subsubsection{Tags}
 Any tags entered when uploading a file will be linked to that file. If some of the tags don't exist, they will be created.
-
 \subsection{Editing files and messages}
-Editing functions can be accessed from the respective page of the file you want to edit. You must be logged in as the original uploader/poster to edit files/messages. Anonymously uploaded files and messages are not editable.
+Editing functions can be accessed from the respective page of the file you want to edit. You must be logged in as the original uploader/poster to edit files/messages.
+
+\subsection{Searching files}
+Files can be searched based on four fields: file name, file type, tags and uploader name. Results are all files that match ALL of the supplied search fields. 
 \end{document}

@@ -7,7 +7,7 @@
         <strong>Uploaded files</strong>
     </div>
     <div class="col-sm-9">
-        <a href="{{base_path}}/filelist?uploader={{user.name}}">{{user.fileCount}}</a>
+        {{user.fileCount}} <a href="{{base_path}}/filelist?uploader={{user.name}}">(View)</a>
     </div>
 </div>
 {% endblock %}

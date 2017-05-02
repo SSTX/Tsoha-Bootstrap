@@ -2,8 +2,8 @@
 INSERT INTO registered_user (user_name, user_pw_hash, user_pw_salt, user_register_time) 
 VALUES ('4423', '$2a$10$13340b662369ee3121811usNixBJY9erHXiaNx4jtgT87ctYqDuZ.', '$2a$10$13340b662369ee312181142dbfd9f144', current_timestamp);
 
-INSERT INTO tag (tag_name, tag_description) 
-VALUES ('test tag', 'this is a tag for testing');
+INSERT INTO tag (tag_name) 
+VALUES ('test_tag');
 
 
 INSERT INTO file_metadata (file_author, file_name, file_description, file_submit_time, file_path, file_size, file_type)

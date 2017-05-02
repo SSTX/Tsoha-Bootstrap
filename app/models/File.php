@@ -85,8 +85,10 @@ class File extends BaseModel {
         }
         $stmt = helperFunctions::sqlMerge($stmt, self::uploaderSearch($params['uploader']));
         if (empty($stmt)) {
-            $stmt = array('stmt' => 'SELECT * FROM file_metadata', 'params' => array());
+            $stmt = array('stmt' => 'SELECT * FROM file_metadata',
+                'params' => array());
         }
+        $stmt['stmt'] .= ' ORDER BY file_metadata.file_submit_time DESC';
         $query = DB::connection()->prepare($stmt['stmt']);
         $query->execute($stmt['params']);
         $rows = $query->fetchAll();

@@ -13,7 +13,7 @@
  */
 class Tag extends BaseModel {
 
-    public $id, $name, $description;
+    public $id, $name;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -22,8 +22,7 @@ class Tag extends BaseModel {
     public static function collect($row) {
         return new Tag(array(
             'id' => $row['tag_id'],
-            'name' => $row['tag_name'],
-            'description' => $row['tag_description']
+            'name' => $row['tag_name']
         ));
     }
 
@@ -34,7 +33,7 @@ class Tag extends BaseModel {
     }
 
     public static function all() {
-        $stmt = 'SELECT * FROM tag';
+        $stmt = 'SELECT * FROM tag ORDER BY tag_name ASC';
         $query = DB::connection()->prepare($stmt);
         $query->execute();
         $rows = $query->fetchAll();
@@ -58,7 +57,7 @@ class Tag extends BaseModel {
     }
 
     public static function findByName($name) {
-        $stmt = 'SELECT * FROM tag WHERE tag_name = :name';
+        $stmt = 'SELECT * FROM tag WHERE tag_name = :name ORDER BY tag_name ASC';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('name' => $name));
         $row = $query->fetch();
@@ -69,10 +68,11 @@ class Tag extends BaseModel {
     }
     
     public static function linkedTags(File $file) {
-        $stmt = 'SELECT Tag.* FROM file_metadata,tag,tagged_file '
+        $stmt = 'SELECT tag.* FROM file_metadata,tag,tagged_file '
                 . 'WHERE tagged_file.tagged_file = file_metadata.file_id '
                 . 'AND tagged_file.tag = tag.tag_id '
-                . 'AND file_metadata.file_id = :fileid';
+                . 'AND file_metadata.file_id = :fileid '
+                . 'ORDER BY tag.tag_name ASC';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('fileid' => $file->id));
         $rows = $query->fetchAll();
