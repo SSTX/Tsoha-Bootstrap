@@ -33,6 +33,12 @@ Unauthenticated users can do the following:
 The user lists either all files on the server, or some subset of them by using the search function.
 \paragraph{Inspect file / browse messages}
 The user selects one file and is shown detailed information about it, in addition to any comments posted on that file.
+\paragraph{Browse users}
+The user lists all user accounts.
+\paragraph{View user profile}
+The user views detailed information about a single user account.
+\paragraph{Browse tags}
+The user lists every tag currently in use in the system.
 \paragraph{Register}
 The user creates an account on the service.
 \paragraph{Log in}
@@ -53,8 +59,13 @@ The user deletes a from the server. All messages related to the file are also de
 The user edits a message. The message must be originally posted by the user trying to edit it.
 \paragraph{Delete message}
 The user deletes a message from the server. The message must be originally posted by the user trying to delete it.
+\paragraph{Change password}
+The user changes the password for their account.
+\paragraph{Delete user account}
+The user deletes their account. This also deletes all their uploaded files and messages.
 \paragraph{Log out}
 The user logs out from the server and becomes and unauthenticated user.
+
 
 \section{Data content}
 \subsection{Class diagram}
@@ -98,7 +109,7 @@ Timestamp & Timestamp & The time the message was posted on the server.\\ \hline
 \end{tabularx}
 
 \section{Database diagram}
-\includegraphics[scale=0.7]{diagrams/database.png}
+\includegraphics[scale=0.65]{diagrams/database.png}
 
 \section{Application architecture}
 The application adheres to the MVC model. Source code is mostly located in the "app" subfolder, with further subfolders for models, views and controllers. Additional libraries are in the folders "lib" and "vendor" in the project root. 
