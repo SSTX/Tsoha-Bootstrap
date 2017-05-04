@@ -5,6 +5,8 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{listings}
 
 \begin{document}
 \newcolumntype{R}{>{\raggedright\arraybackslash}X}
@@ -64,7 +66,7 @@ The user logs out from the server and becomes and unauthenticated user.
 User name & String & The name of the user account on the server.\\ \hline
 Password hash & String & One-way hash of the user's password.\\ \hline
 Password salt & String & Additional data that is used in the hashing process to increase security.\\ \hline
-Admin? & Boolean & Whether the user has admin privileges or not.\\ \hline
+Admin? & Boolean & Whether the user has admin privileges or not. Admins can freely edit and delete files and messages.\\ \hline
 \end{tabularx}
 
 \subsubsection{File}
@@ -102,17 +104,37 @@ Timestamp & Timestamp & The time the message was posted on the server.\\ \hline
 The application adheres to the MVC model. Source code is mostly located in the "app" subfolder, with further subfolders for models, views and controllers. Additional libraries are in the folders "lib" and "vendor" in the project root. 
 
 \section{User interface and system components}
-\includegraphics[scale=0.7]{diagrams/pageflow.png}
+\includegraphics[scale=0.65]{diagrams/pageflow.png}
+
+\section{Installation instructions}
+Clone the repository (https://github.com/SSTX/tsoha-fileboard) or otherwise obtain the files. Put them in a directory on your filesystem that your webserver serves to the internet. Change into that directory and run in the shell:
+\begin{lstlisting}
+php composer.phar dump-autoload
+\end{lstlisting}
+
 
 \section{Instructions for use}
+\subsection{General}
+\subsubsection{Accessing the application}
+The application is located \href{http://ttiira.users.cs.helsinki.fi/tsoha}{here} (http://ttiira.users.cs.helsinki.fi/tsoha)
+\subsubsection{Test account}
+This account has admin privileges.
+\paragraph{User name} 4423
+\paragraph{Password} coil
+
 \subsection{Uploading files}
-\subsubsection{Uploader identification}
 Uploaded files will be linked to your account. 
 \subsubsection{Tags}
-Any tags entered when uploading a file will be linked to that file. If some of the tags don't exist, they will be created.
+Any tags entered when uploading a file will be linked to that file. Tags that didn't exist before will be created.
+
 \subsection{Editing files and messages}
-Editing functions can be accessed from the respective page of the file you want to edit. You must be logged in as the original uploader/poster to edit files/messages.
+Editing functions can be accessed from the respective page of the file you want to edit. You must be logged in as the original uploader/poster to edit files/messages. Deleting a file also deletes any messages connected to it.
+
+\subsection{Managing your user account}
+User account controls can be accessed from your profile page. Currently supported functions are changing your password and deleting your account.
+\subsubsection{Deleting your user account}
+The deleting function removes your account from the database, along with any files and messages you have uploaded.
 
 \subsection{Searching files}
-Files can be searched based on four fields: file name, file type, tags and uploader name. Results are all files that match ALL of the supplied search fields. 
+Files can be searched based on four fields: file name, file type, tags and uploader name. Results must match ALL of the supplied search fields. Wildcards * match any string.
 \end{document}

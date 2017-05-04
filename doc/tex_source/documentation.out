@@ -1,0 +1,29 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Project description}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Implementation environment}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Use cases}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{User classes}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Use cases by user class}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Unauthenticated user}{subsection.2.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Authenticated user}{subsection.2.2}% 8
+\BOOKMARK [1][-]{section.3}{Data content}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Class diagram}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Class attribute details}{section.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.2.1}{User}{subsection.3.2}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.2}{File}{subsection.3.2}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Tag}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Message}{subsection.3.2}% 15
+\BOOKMARK [1][-]{section.4}{Database diagram}{}% 16
+\BOOKMARK [1][-]{section.5}{Application architecture}{}% 17
+\BOOKMARK [1][-]{section.6}{User interface and system components}{}% 18
+\BOOKMARK [1][-]{section.7}{Installation instructions}{}% 19
+\BOOKMARK [1][-]{section.8}{Instructions for use}{}% 20
+\BOOKMARK [2][-]{subsection.8.1}{General}{section.8}% 21
+\BOOKMARK [3][-]{subsubsection.8.1.1}{Accessing the application}{subsection.8.1}% 22
+\BOOKMARK [3][-]{subsubsection.8.1.2}{Test account}{subsection.8.1}% 23
+\BOOKMARK [2][-]{subsection.8.2}{Uploading files}{section.8}% 24
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Tags}{subsection.8.2}% 25
+\BOOKMARK [2][-]{subsection.8.3}{Editing files and messages}{section.8}% 26
+\BOOKMARK [2][-]{subsection.8.4}{Managing your user account}{section.8}% 27
+\BOOKMARK [3][-]{subsubsection.8.4.1}{Deleting your user account}{subsection.8.4}% 28
+\BOOKMARK [2][-]{subsection.8.5}{Searching files}{section.8}% 29
