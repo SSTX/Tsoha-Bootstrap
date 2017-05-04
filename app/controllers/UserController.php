@@ -16,6 +16,7 @@ class UserController extends BaseController {
     private static function userValidator($userData) {
         $v = new Valitron\Validator($userData);
         $v->rule('required', 'name');
+        $v->rule('optional', 'existingUser');
         $v->rule('lengthMax', 'name', 30)->message('{field} must be no longer than 30');
         $v->rule('required', 'password');
         $v->rule('equals', 'password', 'passwordRepeat')->message('Passwords don\'t match');
@@ -88,9 +89,62 @@ class UserController extends BaseController {
         $users = User::all();
         View::make('user/userlist.html', array('users' => $users));
     }
-    
+
     public static function userProfile($id) {
         $user = User::find($id);
         View::make('user/userProfile.html', array('user' => $user));
     }
+
+    public static function passwordChangePost($id) {
+        $user = User::find($id);
+        if (!self::checkOwnership($user)) {
+            Redirect::to('/', array('err' => 'Login to edit user data'));
+        }
+        $userData = array(
+            'name' => $user->name,
+            'password' => $_POST['password'],
+            'passwordRepeat' => $_POST['passwordRepeat']
+        );
+        $validator = self::userValidator($userData);
+        if ($validator->validate()) {
+            $salt = '$2a$10$' . bin2hex(openssl_random_pseudo_bytes(16));
+            $user->pwHash = crypt($userData['password'], $salt);
+            $user->pwSalt = $salt;
+            $user->update();
+            Redirect::to('/user/' . $user->id, array('successMsg' => 'Password changed successfully.'));
+        } else {
+            $errors = helperFunctions::array_flatten($validator->errors());
+            Redirect::to('/user/' . $user->id . '/edit', array('errors' => $errors));
+        }
+    }
+
+    public static function passwordChangeGet($id) {
+        $user = User::find($id);
+        if (!self::checkOwnership($user)) {
+            Redirect::to('/', array('err' => 'Login to edit user data'));
+        }
+        View::make('user/changePassword.html', array('user' => $user));
+    }
+
+    public static function manageUser($id) {
+        $user = User::find($id);
+        if (!self::checkOwnership($user)) {
+            Redirect::to('/', array('err' => 'Login to edit user data'));
+        }
+        View::make('user/manageUser.html', array('user' => $user));
+    }
+
+    public static function destroyUser($id) {
+        $user = User::find($id);
+        if (!self::checkOwnership($user)) {
+            Redirect::to('/', array('err' => 'Login to edit user data'));
+        }
+        $files = $user->ownedFiles();
+        foreach ($files as $file) {
+            $file->destroy();
+        }
+        $user->destroy();
+        Redirect::to('/', array('infoMsg' => 'Deleted user ' . $user->name));
+    }
+
 }

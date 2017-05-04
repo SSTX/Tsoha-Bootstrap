@@ -46,8 +46,10 @@
                         <li><a href="{{base_path}}/upload">Upload a file</a></li>
                         <li><a href="{{base_path}}/search">Search files</a></li>
                         <li><a href="{{base_path}}/taglist">Tag list</a></li>
+                        <li><a href="{{base_path}}/userlist">User list</a></li>
                         {% if user_logged_in %}
                         <li><a href="{{base_path}}/logout">Logout <strong>{{user_logged_in.name}}</strong></a></li>
+                        <li><a href="{{base_path}}/user/{{user_logged_in.id}}">My profile</a></li>
                         {% else %}
                         <li><a href="{{base_path}}/login">Login</a></li>
                         <li><a href="{{base_path}}/register">Register</a></li>

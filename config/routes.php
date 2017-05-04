@@ -89,3 +89,19 @@ $routes->get('/user/:id', function($id) {
 $routes->get('/userlist', function() {
     UserController::userlist();
 });
+
+$routes->get('/user/:id/manage', function($id) {
+    UserController::manageUser($id);
+});
+
+$routes->get('/user/:id/password', function($id) {
+    UserController::passwordChangeGet($id);
+});
+
+$routes->post('/user/:id/password', function($id) {
+    UserController::passwordChangePost($id);
+});
+
+$routes->get('/user/:id/destroy', function($id) {
+    UserController::destroyUser($id);
+});

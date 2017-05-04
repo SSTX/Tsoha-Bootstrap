@@ -104,16 +104,35 @@ class Tag extends BaseModel {
     }
     
     public function save() {
-        $stmt = 'INSERT INTO tag (tag_name, tag_description) '
-            .'VALUES (:name, :desc) '
+        $stmt = 'INSERT INTO tag (tag_name) '
+            .'VALUES (:name) '
             .'RETURNING tag_id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array(
             'name' => $this->name,
-            'desc' => $this->description,
         ));
         $row = $query->fetch();
         $this->id = $row['tag_id'];
     }
 
+    public function numFilesTagged() {
+        $stmt = 'SELECT COUNT (*) AS file_count '
+                . 'FROM file_metadata,tagged_file,tag '
+                . 'WHERE file_metadata.file_id = tagged_file.tagged_file '
+                . 'AND tag.tag_id = tagged_file.tag '
+                . 'AND tag.tag_id = :tagid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('tagid' => $this->id));
+        $row = $query->fetch();
+        return $row['file_count'];
+    }
+    
+    public static function removeOrphans() {
+        $stmt = 'DELETE FROM tag '
+                . 'WHERE tag.tag_id NOT IN '
+                . '(SELECT tagged_file.tag '
+                . 'FROM tagged_file)';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute();
+    }
 }

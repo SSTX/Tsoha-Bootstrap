@@ -28,6 +28,7 @@ class TagController {
         $tagnames = explode(' ', $rawTagString);
         $tags = array();
         foreach ($tagnames as $tagname) {
+            $tagname = trim($tagname);
             $tag = Tag::findByName($tagname);
             if ($tag == null) {
                 $tag = new Tag(array('name' => $tagname));
@@ -36,22 +37,6 @@ class TagController {
             $tags[] = $tag;
         }
         return $tags;
-    }
-
-    public static function newTagGet() {
-        View::make('tag/newTag.html');
-    }
-
-    public static function newTagPost() {
-        
-    }
-
-    public static function editTagGet() {
-        View::make('tag/editTag.html');
-    }
-
-    public static function editTagPost() {
-        
     }
 
     public static function tagList() {

@@ -97,6 +97,30 @@ class User extends BaseModel {
         return NULL;
     }
     
+    public function update() {
+        $stmt = 'UPDATE registered_user '
+                . 'SET user_pw_hash = :hash, '
+                . 'user_pw_salt = :salt '
+                . 'WHERE user_id = :id';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array(
+            'hash' => $this->pwHash,
+            'salt' => $this->pwSalt,
+            'id' => $this->id
+        ));
+    }
+    
+    public function destroy() {
+        $stmt = 'DELETE FROM registered_user '
+                . 'WHERE user_id = :userid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('userid' => $this->id));
+    }
+    
+    public function ownedFiles() {
+        return File::findByUser($this);
+    }
+    
     public function messageCount() {
         return Message::userMessageCount($this);
     }

@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for tag in tags %}
-<ol><a href="{{base_path}}/filelist?tags={{tag.name}}">{{tag.name}}</a></ol>
-{% endfor %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tag name</th>
+            <th>Files tagged</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tag in tags %}
+        <tr>
+            <td><a href="{{base_path}}/filelist?tags={{tag.name}}">{{tag.name}}</a></td>
+            <td>{{tag.numFilesTagged()}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

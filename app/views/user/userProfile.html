@@ -10,4 +10,7 @@
         {{user.fileCount}} <a href="{{base_path}}/filelist?uploader={{user.name}}">(View)</a>
     </div>
 </div>
+{% if user.id == user_logged_in.id %}
+<a href="{{base_path}}/user/{{user.id}}/manage" class="btn btn-default">Manage account</a>
+{% endif %}
 {% endblock %}

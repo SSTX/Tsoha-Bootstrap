@@ -85,10 +85,9 @@ class File extends BaseModel {
         }
         $stmt = helperFunctions::sqlMerge($stmt, self::uploaderSearch($params['uploader']));
         if (empty($stmt)) {
-            $stmt = array('stmt' => 'SELECT * FROM file_metadata',
-                'params' => array());
+            return self::all();
         }
-        $stmt['stmt'] .= ' ORDER BY file_metadata.file_submit_time DESC';
+        $stmt['stmt'] .= ' ORDER BY file_submit_time DESC';
         $query = DB::connection()->prepare($stmt['stmt']);
         $query->execute($stmt['params']);
         $rows = $query->fetchAll();
@@ -141,7 +140,7 @@ class File extends BaseModel {
                 . 'AND registered_user.user_name LIKE :uploader';
         return array('stmt' => $stmt, 'params' => array('uploader' => $uploader));
     }
-    
+
     public static function find($id) {
         $stmt = 'SELECT * FROM file_metadata WHERE file_id = :id';
         $query = DB::connection()->prepare($stmt);
@@ -152,6 +151,21 @@ class File extends BaseModel {
             $file = File::collect($row);
         }
         return $file;
+    }
+    
+    public static function findByUser(User $user) {
+        $stmt = 'SELECT file_metadata.* '
+                . 'FROM file_metadata,registered_user '
+                . 'WHERE file_metadata.file_author = registered_user.user_id '
+                . 'AND registered_user.user_id = :userid';
+        $query = DB::connection()->prepare($stmt);
+        $query->execute(array('userid' => $user->id));
+        $rows = $query->fetchAll();
+        $files = array();
+        foreach ($rows as $row) {
+            $files[] = File::collect($row);
+        }
+        return $files;
     }
 
     public function save() {
@@ -205,6 +219,10 @@ class File extends BaseModel {
                 . 'WHERE file_id = :id';
         $query = DB::connection()->prepare($stmt);
         $query->execute(array('id' => $this->id));
+        if (file_exists(FileController::$basePath . $this->path)) {
+            unlink(FileController::$basePath . $this->path);
+        }
+        Tag::removeOrphans();
     }
 
     public static function userFileCount(User $user) {
@@ -217,4 +235,5 @@ class File extends BaseModel {
         $row = $query->fetch();
         return $row['message_count'];
     }
+
 }

@@ -23,16 +23,19 @@ class FileController extends BaseController {
         $terms['tags'] = array();
         $terms['uploader'] = null;
         if (!empty($_GET['filename'])) {
-            $terms['name'] = $_GET['filename'];
+            $terms['name'] = pg_escape_string($_GET['filename']);
         }
         if (!empty($_GET['tags'])) {
             $terms['tags'] = explode(' ', $_GET['tags']);
+            foreach ($terms['tags'] as $k => $v) {
+                $terms['tags'][$k] = pg_escape_string(trim($v));
+            }
         }
         if (!empty($_GET['filetype'])) {
-            $terms['type'] = $_GET['filetype'];
+            $terms['type'] = pg_escape_string($_GET['filetype']);
         }
         if (!empty($_GET['uploader'])) {
-            $terms['uploader'] = $_GET['uploader'];
+            $terms['uploader'] = pg_escape_string($_GET['uploader']);
         }
         $files = File::search($terms);
         View::make('file/filelist.html', array('files' => $files));
@@ -55,6 +58,7 @@ class FileController extends BaseController {
             Redirect::to('/', array('err' => 'Please log in to upload files.'));
         }
         $fileData = array();
+        $finalPath = '';
         if (!empty($_FILES['fileInput']['tmp_name'])) {
             if (empty($_POST['nameOverride'])) {
                 $fileData['name'] = basename($_FILES['fileInput']['name']);
@@ -73,10 +77,10 @@ class FileController extends BaseController {
         $validator = self::fileValidator($fileData);
         $file = new File($fileData);
         if ($validator->validate()) {
-            move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
-            chmod($finalPath, 0744);
             $file->save();
             TagController::updateTags($file, $_POST['tags']); //this must be after file->save for file to have id
+            move_uploaded_file($_FILES['fileInput']['tmp_name'], $finalPath);
+            chmod($finalPath, 0744);
             Redirect::to('/file/' . $file->id, array('success' => 'File uploaded successfully.'));
         } else {
             $errors = helperFunctions::array_flatten($validator->errors());
@@ -124,7 +128,6 @@ class FileController extends BaseController {
         if (!self::checkOwnership($file->author)) {
             Redirect::to('/file/' . $file->id, array('err' => 'Login as the uploader to edit files.'));
         }
-        unlink(FileController::$basePath . $file->path);
         $file->destroy();
         Redirect::to('/filelist');
     }
